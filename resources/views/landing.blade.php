@@ -267,12 +267,42 @@ ul { list-style: none; }
     transform: translateY(-1px);
 }
 @media (max-width: 900px) {
-    .hero-info-left, .hero-info-right,
+    .hero-info-right,
     .hero-deco-tl, .hero-deco-tr,
     .hero-deco-bl, .hero-deco-br { display: none; }
-    .hero-slider, .hero-slider-wrap { width: 260px !important; }
-    .hero-slider { height: 260px !important; }
+    .hero-headline--sub { display: none; }
+    .hero-slider, .hero-slider-wrap { width: 180px !important; }
+    .hero-slider { height: 180px !important; }
     .hero-headline h1 { font-size: clamp(2rem, 7vw, 3.2rem); }
+    /* subtext muncul di bawah foto pada mobile */
+    .hero-info-left {
+        position: static;
+        transform: none;
+        max-width: 100%;
+        text-align: center;
+        padding: 0 16px;
+        margin-top: 8px;
+    }
+    .hero-mid {
+        flex-direction: column;
+        gap: 0;
+    }
+    .hero-bottom { margin-top: 20px; }
+}
+@media (max-width: 480px) {
+    .hero {
+        min-height: unset;
+        padding-top: 72px;
+        align-items: flex-start;
+    }
+    .hero-inner { padding: 16px 0 32px; }
+    .hero-headline h1 { font-size: 1.9rem; }
+    .hero-slider, .hero-slider-wrap { width: 150px !important; }
+    .hero-slider { height: 150px !important; }
+    .hero-mid { margin: -8px auto -8px; }
+    .hero-info-left p { font-size: 12px; line-height: 1.5; }
+    .hero-bottom { margin-top: 14px; gap: 8px; }
+    .btn-hero-primary, .btn-hero-secondary { padding: 11px 20px; font-size: 13px; }
 }
 
 /* bar fitur */
@@ -1094,23 +1124,23 @@ ul { list-style: none; }
     .navbar-logo { padding: 0 8px; }
 
     /* Hero */
-    .hero { padding-top: 72px; min-height: 100svh; }
+    .hero { padding-top: 60px; min-height: unset; }
     .hero-inner {
-        padding: 32px 0 52px;
+        padding: 8px 0 16px;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 0;
     }
-    /* Urutan konten yang logis: judul 1 → judul 2 → gambar → deskripsi → tombol */
+    /* Urutan konten yang logis: judul 1 → gambar → deskripsi → tombol */
     .hero-inner > .hero-headline:nth-child(1) { order: 1; width: 100%; }
-    .hero-inner > .hero-headline:nth-child(3) { order: 2; width: 100%; margin-bottom: 24px; }
-    .hero-inner > .hero-mid              { order: 3; }
-    .hero-inner > .hero-bottom           { order: 4; }
+    .hero-inner > .hero-headline--sub { display: none !important; }
+    .hero-inner > .hero-mid              { order: 2; }
+    .hero-inner > .hero-bottom           { order: 3; }
     .hero-headline h1 {
         font-size: clamp(2rem, 8vw, 2.8rem);
         line-height: 1.06;
-        margin-bottom: 2px;
+        margin-bottom: 0;
     }
     /* Dekorasi bintang animasi disembunyikan */
     .hero-deco-tl, .hero-deco-tr,
@@ -1133,20 +1163,20 @@ ul { list-style: none; }
         max-width: 100%;
         text-align: center;
         display: block !important;
-        margin-top: 16px;
+        margin-top: 4px;
         padding: 0 12px;
     }
-    .hero-info-left p { font-size: 14px; color: #666; }
+    .hero-info-left p { font-size: 12px; color: #666; line-height: 1.4; }
     .hero-info-right { display: none !important; }
     /* Gambar slider ukuran layak */
     .hero-slider-wrap, .hero-slider {
-        width: 280px !important;
-        height: 280px !important;
+        width: 180px !important;
+        height: 180px !important;
     }
     /* Tombol CTA full-width agar mudah dipencet */
     .hero-bottom {
-        margin-top: 32px;
-        gap: 12px;
+        margin-top: 10px;
+        gap: 8px;
         width: 100%;
         flex-direction: column;
         align-items: stretch;
@@ -1154,8 +1184,8 @@ ul { list-style: none; }
     .btn-hero-primary, .btn-hero-secondary {
         width: 100%;
         justify-content: center;
-        font-size: 15px;
-        padding: 15px 20px;
+        font-size: 14px;
+        padding: 12px 20px;
     }
 
     /* Features bar */
@@ -1225,11 +1255,11 @@ ul { list-style: none; }
     .navbar-logo img { height: 38px; }
 
     /* Hero */
-    .hero { padding-top: 64px; }
+    .hero { padding-top: 64px; min-height: unset; }
     .hero-headline h1 { font-size: clamp(1.8rem, 9vw, 2.4rem); }
     .hero-slider-wrap, .hero-slider {
-        width: 240px !important;
-        height: 240px !important;
+        width: 160px !important;
+        height: 160px !important;
     }
     .btn-hero-primary, .btn-hero-secondary { font-size: 14px; padding: 13px 18px; }
 
@@ -1339,7 +1369,7 @@ ul { list-style: none; }
             </div>
 
             <!-- judul baris 2 -->
-            <div class="hero-headline">
+            <div class="hero-headline hero-headline--sub">
                 <h1>Terlengkap &amp; <em>Terpercaya</em></h1>
             </div>
 
