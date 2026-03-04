@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
@@ -7,1289 +7,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-/* reset & dasar */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body {
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #f8f8f8;
-    color: #1a1a1a;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-}
-a { text-decoration: none; color: inherit; }
-img { display: block; max-width: 100%; }
-ul { list-style: none; }
-
-/* utilitas */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-/* animasi fade-up */
-.reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.6s cubic-bezier(.4,0,.2,1), transform 0.6s cubic-bezier(.4,0,.2,1);
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-d1 { transition-delay: 0.05s; }
-.reveal-d2 { transition-delay: 0.12s; }
-.reveal-d3 { transition-delay: 0.19s; }
-.reveal-d4 { transition-delay: 0.26s; }
-.reveal-d5 { transition-delay: 0.33s; }
-.reveal-d6 { transition-delay: 0.40s; }
-
-/* navbar */
-.navbar-wrap {
-    position: fixed;
-    inset: 0 0 auto 0;
-    z-index: 9999;
-    padding: 18px 24px;
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
-}
-.navbar {
-    pointer-events: auto;
-    display: flex;
-    align-items: center;
-    background: rgba(255,255,255,0.88);
-    backdrop-filter: saturate(200%) blur(24px);
-    -webkit-backdrop-filter: saturate(200%) blur(24px);
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 980px;
-    padding: 6px 6px 6px 6px;
-    height: 52px;
-    max-width: 860px;
-    width: 100%;
-    gap: 4px;
-    transition: box-shadow 0.3s;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-}
-.navbar.scrolled {
-    box-shadow: 0 8px 40px rgba(0,0,0,0.13);
-    background: rgba(255,255,255,0.97);
-}
-.navbar-left-links,
-.navbar-right-links {
-    display: flex; gap: 2px; align-items: center; flex: 1;
-}
-.navbar-right-links { justify-content: flex-end; }
-.navbar-logo {
-    padding: 0 16px; flex-shrink: 0;
-    display: flex; align-items: center;
-    text-decoration: none;
-}
-.navbar-logo img {
-    height: 52px; width: auto;
-    display: block; object-fit: contain;
-}
-.navbar-left-links li a,
-.navbar-right-links li a {
-    display: block; padding: 7px 14px;
-    font-size: 13px; font-weight: 500;
-    color: #555;
-    border-radius: 980px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-}
-.navbar-left-links li a:hover,
-.navbar-right-links li a:hover,
-.navbar-left-links li a.active,
-.navbar-right-links li a.active {
-    background: rgba(0,0,0,0.05);
-    color: #111;
-}
-.navbar-cta {
-    display: inline-flex; align-items: center;
-    background: #e63946; color: #fff;
-    font-size: 12px; font-weight: 700;
-    padding: 8px 20px; border-radius: 980px;
-    transition: background 0.2s, transform 0.15s;
-    white-space: nowrap; flex-shrink: 0;
-    margin-left: 4px;
-}
-.navbar-cta:hover { background: rgba(193,18,31,0.65); transform: scale(1.03); }
-
-/* hero */
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-14px); }
-}
-@keyframes blink {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
-}
-@keyframes spin-slow {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-}
-.hero {
-    min-height: 100vh;
-    padding-top: 88px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.hero-inner {
-    position: relative;
-    width: 100%;
-    padding: 32px 0 56px;
-}
-.hero-headline {
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-.hero-headline h1 {
-    font-size: clamp(2.6rem, 6vw, 5.2rem);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.02;
-    color: #111;
-}
-.hero-headline h1 em { font-style: normal; color: #e63946; }
-
-/* baris tengah */
-.hero-mid {
-    position: relative;
-    max-width: 900px;
-    margin: -16px auto -16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.hero-info-left {
-    position: absolute; left: 0; top: 50%;
-    transform: translateY(-50%);
-    max-width: 210px;
-    z-index: 3;
-}
-.hero-info-left p {
-    font-size: 13px; color: #777;
-    line-height: 1.7;
-}
-.hero-info-right {
-    position: absolute; right: 0; top: 50%;
-    transform: translateY(-50%);
-    text-align: right;
-    z-index: 3;
-}
-.hero-years { display: inline-flex; flex-direction: column; align-items: flex-end; }
-.hero-years .stars { color: #fbbf24; font-size: 14px; letter-spacing: 3px; margin-bottom: 2px; }
-.hero-years strong { font-size: 2.2rem; font-weight: 900; color: #111; line-height: 1; letter-spacing: -0.04em; display: block; }
-.hero-years small { font-size: 12px; color: #999; margin-top: 2px; }
-
-/* slider hero */
-.hero-center { display: flex; justify-content: center; align-items: center; }
-.hero-slider-wrap {
-    position: relative;
-    width: 360px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-}
-.hero-slider {
-    width: 360px; height: 360px;
-    position: relative;
-    overflow: hidden;
-    background: transparent;
-}
-.hero-slide {
-    position: absolute; inset: 0;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-}
-.hero-slide.active { opacity: 1; }
-.hero-slide img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: contain;
-    padding: 24px;
-    box-sizing: border-box;
-    mix-blend-mode: multiply;
-}
-.hero-slide-jogja img,
-.hero-slide-malang img {
-    filter: brightness(1.05) contrast(1.05);
-}
-
-/* dekorasi bintang */
-.asterisk {
-    display: inline-block; line-height: 1;
-    color: #e63946; user-select: none;
-    animation: spin-slow 9s linear infinite;
-}
-.asterisk-lg { font-size: 2.8rem; }
-.asterisk-sm { font-size: 1.2rem; }
-.hero-deco {
-    position: absolute; z-index: 4;
-}
-.hero-deco-tl { top: 18px;  left: 0; }
-.hero-deco-tr { top: 18px;  right: 0; }
-.hero-deco-bl { bottom: 20px; left: 20px; }
-.hero-deco-br { bottom: 20px; right: 20px; }
-
-/* tombol CTA */
-.hero-bottom {
-    display: flex; justify-content: center;
-    align-items: center; gap: 12px;
-    margin-top: 40px; flex-wrap: wrap;
-}
-.btn-hero-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #e63946; color: #fff;
-    font-size: 14px; font-weight: 700;
-    padding: 14px 28px; border-radius: 980px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 24px rgba(230,57,70,0.28);
-}
-.btn-hero-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 36px rgba(230,57,70,0.38);
-    background: #c1121f;
-}
-.btn-hero-secondary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #fff;
-    border: 1.5px solid rgba(0,0,0,0.12);
-    color: #333;
-    font-size: 14px; font-weight: 600;
-    padding: 14px 28px; border-radius: 980px;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-}
-.btn-hero-secondary:hover {
-    background: #f8f8f8;
-    border-color: rgba(0,0,0,0.18);
-    transform: translateY(-1px);
-}
-@media (max-width: 900px) {
-    .hero-info-right,
-    .hero-deco-tl, .hero-deco-tr,
-    .hero-deco-bl, .hero-deco-br { display: none; }
-    .hero-headline--sub { display: none; }
-    .hero-slider, .hero-slider-wrap { width: 180px !important; }
-    .hero-slider { height: 180px !important; }
-    .hero-headline h1 { font-size: clamp(2rem, 7vw, 3.2rem); }
-    /* subtext muncul di bawah foto pada mobile */
-    .hero-info-left {
-        position: static;
-        transform: none;
-        max-width: 100%;
-        text-align: center;
-        padding: 0 16px;
-        margin-top: 8px;
-    }
-    .hero-mid {
-        flex-direction: column;
-        gap: 0;
-    }
-    .hero-bottom { margin-top: 20px; }
-}
-@media (max-width: 480px) {
-    .hero {
-        min-height: unset;
-        padding-top: 72px;
-        align-items: flex-start;
-    }
-    .hero-inner { padding: 16px 0 32px; }
-    .hero-headline h1 { font-size: 1.9rem; }
-    .hero-slider, .hero-slider-wrap { width: 150px !important; }
-    .hero-slider { height: 150px !important; }
-    .hero-mid { margin: -8px auto -8px; }
-    .hero-info-left p { font-size: 12px; line-height: 1.5; }
-    .hero-bottom { margin-top: 14px; gap: 8px; }
-    .btn-hero-primary, .btn-hero-secondary { padding: 11px 20px; font-size: 13px; }
-}
-
-/* bar fitur */
-.features-bar {
-    background: #fff;
-    border-top: 1px solid #f0f0f0;
-    border-bottom: 1px solid #f0f0f0;
-    padding: 0;
-}
-.features-bar-inner {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-@media (max-width: 640px) { .features-bar-inner { flex-direction: column; } }
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 22px 36px;
-    border-right: 1px solid #f0f0f0;
-}
-.feature-item:last-child { border-right: none; }
-.feature-icon {
-    width: 44px; height: 44px; flex-shrink: 0;
-    background: #f8f8f8;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-}
-.feature-text h5 { font-size: 13px; font-weight: 700; color: #111; }
-.feature-text p { font-size: 11px; color: #999; margin-top: 2px; line-height: 1.4; }
-
-/* judul section */
-.section-heading {
-    text-align: center;
-    margin-bottom: 48px;
-}
-.section-pill {
-    display: inline-block;
-    background: rgba(230,57,70,0.07);
-    color: #e63946;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 980px;
-    margin-bottom: 12px;
-}
-.section-title {
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: #111;
-    margin-bottom: 10px;
-}
-.section-sub {
-    font-size: 15px;
-    color: #888;
-    max-width: 520px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
-/* grid kategori */
-.categories-section { padding: 80px 0; background: #f8f8f8; }
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-}
-@media (max-width: 900px) { .categories-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 500px)  { .categories-grid { grid-template-columns: 1fr; } }
-
-.cat-card {
-    border-radius: 24px;
-    overflow: hidden;
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.35s cubic-bezier(.4,0,.2,1),
-                box-shadow 0.35s cubic-bezier(.4,0,.2,1);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-}
-.cat-card:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 24px 56px rgba(0,0,0,0.18);
-}
-.cat-card--red    { background: linear-gradient(135deg, #e63946 0%, #c1121f 100%); color: #fff; }
-.cat-card--yellow { background: linear-gradient(135deg, #ffbe0b 0%, #fb5607 100%); color: #fff; }
-.cat-card--blue   { background: linear-gradient(135deg, #3a86ff 0%, #0043ce 100%); color: #fff; }
-.cat-card--green  { background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%); color: #fff; }
-.cat-card--dark   { background: linear-gradient(135deg, #2b2d42 0%, #1a1a2e 100%); color: #fff; }
-.cat-card--purple { background: linear-gradient(135deg, #7b2d8b 0%, #560bad 100%); color: #fff; }
-
-/* foto mengisi seluruh kartu */
-.cat-img-wrap {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-}
-.cat-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
-    padding: 24px 16px 0;
-    filter: drop-shadow(0 -4px 24px rgba(0,0,0,0.15));
-    transition: transform 0.5s cubic-bezier(.4,0,.2,1);
-}
-.cat-img[src=""] { display: none; }
-.cat-card:hover .cat-img { transform: scale(1.08) translateY(-6px); }
-
-/* overlay gradient bawah untuk teks */
-.cat-card-text {
-    position: relative;
-    z-index: 2;
-    margin-top: auto;
-    padding: 80px 22px 22px;
-    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
-}
-.cat-label {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    opacity: 0.85; margin-bottom: 4px;
-}
-.cat-title {
-    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin-bottom: 12px;
-}
-.btn-browse {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.22);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.35);
-    color: #fff;
-    font-size: 11px; font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 980px;
-    width: fit-content;
-    transition: background 0.2s;
-}
-.btn-browse:hover { background: rgba(255,255,255,0.42); }
-
-/* testimoni */
-.testimonials-section { padding: 80px 0; background: #fff; }
-.testimonials-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.testimonials-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #999;
-    margin-bottom: 10px;
-}
-.testimonials-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
-    color: #111;
-}
-.testimonials-title span { color: #bbb; font-weight: 400; }
-.testimonials-nav { display: flex; gap: 10px; align-items: center; padding-top: 8px; flex-shrink: 0; }
-.testi-nav-btn {
-    width: 50px; height: 50px;
-    border-radius: 50%;
-    background: #888;
-    border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 20px;
-    transition: background 0.2s, transform 0.2s;
-    flex-shrink: 0;
-}
-.testi-nav-btn:hover { background: rgba(192,57,43,0.65); transform: scale(1.05); }
-/* slider 3 kartu */
-.testimonials-track-wrap {
-    overflow: hidden;
-    cursor: grab;
-    user-select: none;
-}
-.testimonials-track-wrap:active { cursor: grabbing; }
-.testimonials-track {
-    display: flex;
-    gap: 24px;
-    transition: transform 0.5s cubic-bezier(.4,0,.2,1);
-    will-change: transform;
-}
-.testi-card {
-    background: #f5f5f7;
-    border-radius: 20px;
-    padding: 32px;
-    /* 3 cards with 2x24px gap: (100% - 48px) / 3 */
-    min-width: calc(33.333% - 16px);
-    width: calc(33.333% - 16px);
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-sizing: border-box;
-    min-height: 400px;
-}
-@media (max-width: 1024px) {
-    .testi-card { min-width: calc(50% - 12px); width: calc(50% - 12px); }
-}
-@media (max-width: 640px) {
-    .testi-card { min-width: 100%; width: 100%; }
-}
-.testi-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 28px;
-}
-.testi-avatar {
-    width: 60px; height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
-    display: block;
-    background: transparent;
-}
-.testi-company-badge {
-    display: flex; align-items: center; gap: 8px;
-    border: 1.5px solid #ddd;
-    border-radius: 980px;
-    padding: 7px 16px 7px 10px;
-    font-size: 12px; font-weight: 700; color: #333;
-    background: #fff;
-    white-space: nowrap;
-}
-.testi-badge-icon {
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    background: #111;
-    color: #fff;
-    font-size: 11px; font-weight: 800;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    text-transform: uppercase;
-    letter-spacing: 0;
-}
-.testi-quote-mark {
-    font-size: 44px;
-    color: #4361ee;
-    line-height: 1;
-    font-family: Georgia, serif;
-    margin-bottom: 16px;
-    display: block;
-}
-.testi-text {
-    font-size: clamp(16px, 1.6vw, 20px);
-    font-weight: 700;
-    line-height: 1.5;
-    color: #111;
-    margin-bottom: 32px;
-}
-.testi-footer {
-    border-left: 3px solid #cdcdcd;
-    padding-left: 14px;
-    margin-top: auto;
-}
-.testi-name { font-size: 14px; font-weight: 700; color: #111; }
-.testi-role { font-size: 12px; color: #999; margin-top: 3px; line-height: 1.4; }
-/* indikator titik */
-.testi-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 28px;
-}
-.testi-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #ddd;
-    border: none; cursor: pointer;
-    padding: 0;
-    transition: background 0.25s, transform 0.25s;
-    flex-shrink: 0;
-}
-.testi-dot.active { background: #111; transform: scale(1.3); }
-.testi-dot:hover { background: #aaa; }
-
-.product-card {
-    background: #fff;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid #f0f0f0;
-    cursor: pointer;
-    transition: transform 0.3s cubic-bezier(.4,0,.2,1),
-                box-shadow 0.3s cubic-bezier(.4,0,.2,1),
-                border-color 0.3s;
-}
-.product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 56px rgba(0,0,0,0.10);
-    border-color: transparent;
-}
-.product-img-wrap {
-    background: #f8f8f8;
-    position: relative;
-    aspect-ratio: 1;
-    overflow: hidden;
-}
-.product-img-wrap img {
-    width: 100%; height: 100%;
-    object-fit: contain;
-    padding: 20px;
-    transition: transform 0.4s cubic-bezier(.4,0,.2,1);
-}
-.product-card:hover .product-img-wrap img { transform: scale(1.06); }
-.product-badge {
-    position: absolute;
-    top: 12px; left: 12px;
-    font-size: 10px; font-weight: 700;
-    padding: 4px 10px; border-radius: 980px;
-    letter-spacing: 0.04em; text-transform: uppercase;
-}
-.badge-bestseller { background: #111; color: #fff; }
-.badge-sale       { background: #e63946; color: #fff; }
-.badge-new        { background: #4cc9f0; color: #fff; }
-.badge-hot        { background: #fb5607; color: #fff; }
-.product-body { padding: 16px 18px 20px; }
-.product-category {
-    font-size: 11px; font-weight: 600;
-    color: #aaa; text-transform: uppercase;
-    letter-spacing: 0.05em; margin-bottom: 4px;
-}
-.product-name {
-    font-size: 14px; font-weight: 700;
-    color: #111; line-height: 1.35;
-    margin-bottom: 10px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.product-price-row {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-top: 14px;
-}
-.product-price {
-    font-size: 17px; font-weight: 800;
-    color: #111; letter-spacing: -0.02em;
-}
-.product-price-old {
-    font-size: 12px; color: #bbb;
-    text-decoration: line-through;
-    margin-left: 6px;
-    font-weight: 400;
-}
-.product-price-wrap { display: flex; align-items: baseline; gap: 4px; }
-.btn-add-cart {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: #111;
-    border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 18px;
-    transition: background 0.2s, transform 0.2s;
-    flex-shrink: 0;
-}
-.btn-add-cart:hover { background: rgba(230,57,70,0.65); transform: scale(1.08); }
-.product-rating {
-    display: flex; align-items: center; gap: 4px;
-    margin-bottom: 2px;
-}
-.stars { color: #fbbf24; font-size: 12px; letter-spacing: 1px; }
-.review-count { font-size: 11px; color: #bbb; }
-
-/* blog */
-.blog-section { padding: 96px 0; background: #f8f8f8; }
-.blog-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 48px;
-    flex-wrap: wrap;
-}
-.blog-header-left .blog-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #999;
-    margin-bottom: 10px;
-}
-.blog-header-left h2 {
-    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: #111;
-    margin-bottom: 0;
-    line-height: 1.15;
-}
-.btn-blog-all {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #888;
-    color: #fff;{{--    --}}
-    font-size: 13px; font-weight: 700;
-    padding: 12px 22px;
-    border-radius: 980px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    align-self: flex-end;
-    letter-spacing: 0.01em;
-    transition: background 0.2s, transform 0.2s;
-}
-.btn-blog-all svg { transition: transform 0.2s; }
-.btn-blog-all:hover { background: rgba(192,57,43,0.65); transform: translateY(-2px); }
-.btn-blog-all:hover svg { transform: translateX(3px); }
-/* grid blog */
-.blog-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 28px;
-    align-items: stretch;
-}
-@media (max-width: 900px) { .blog-grid { grid-template-columns: 1fr; } }
-/* kartu utama */
-.blog-featured {
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border-radius: 20px;
-    overflow: hidden;
-    transition: box-shadow 0.3s, transform 0.3s;
-    color: inherit;
-}
-.blog-featured:hover {
-    box-shadow: 0 16px 56px rgba(0,0,0,0.10);
-    transform: translateY(-4px);
-}
-.blog-featured-img {
-    width: 100%;
-    aspect-ratio: 16/10;
-    overflow: hidden;
-    position: relative;
-    flex-shrink: 0;
-}
-.blog-featured-img img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s cubic-bezier(.4,0,.2,1);
-}
-.blog-featured:hover .blog-featured-img img { transform: scale(1.04); }
-.blog-cat-pill {
-    position: absolute;
-    top: 14px; left: 14px;
-    background: #111;
-    color: #fff;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 5px 12px;
-    border-radius: 980px;
-    pointer-events: none;
-}
-.blog-featured-body {
-    padding: 28px 28px 24px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-.blog-featured-title {
-    font-size: clamp(17px, 1.8vw, 21px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: #111;
-    line-height: 1.35;
-    margin-bottom: 10px;
-}
-.blog-featured-excerpt {
-    font-size: 13px;
-    color: #888;
-    line-height: 1.7;
-    margin-bottom: 24px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    flex: 1;
-}
-.blog-featured-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding-top: 16px;
-    border-top: 1px solid #f0f0f0;
-}
-.blog-meta-author { display: flex; align-items: center; gap: 8px; }
-.blog-author-avatar {
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-.blog-author-name { font-size: 12px; font-weight: 600; color: #555; }
-.blog-date { font-size: 11px; color: #bbb; font-weight: 500; }
-/* daftar artikel */
-.blog-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    height: 100%;
-}
-.blog-list-item {
-    display: flex;
-    flex: 1;
-    gap: 16px;
-    align-items: center;
-    padding: 16px;
-    background: #fff;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: box-shadow 0.25s, transform 0.25s;
-    color: inherit;
-}
-.blog-list-item:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
-}
-.blog-list-thumb {
-    width: 100px;
-    height: 72px;
-    border-radius: 10px;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-.blog-list-thumb img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s cubic-bezier(.4,0,.2,1);
-}
-.blog-list-item:hover .blog-list-thumb img { transform: scale(1.08); }
-.blog-list-body { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-.blog-list-cat {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: #e63946;
-}
-.blog-list-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #111;
-    line-height: 1.45;
-    letter-spacing: -0.01em;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.blog-list-author { font-size: 11px; color: #bbb; font-weight: 500; }
-
-/* newsletter */
-.newsletter-section {
-    padding: 80px 0;
-    background: #fff;
-    border-bottom: 1px solid #ebebeb;
-}
-.newsletter-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 48px;
-    flex-wrap: wrap;
-    position: relative;
-    background: #111;
-    border-radius: 28px;
-    padding: 56px 52px;
-    overflow: hidden;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.14);
-}
-.newsletter-card::after {
-    content: 'TKDN';
-    position: absolute;
-    right: -10px; top: 50%;
-    transform: translateY(-50%);
-    font-size: clamp(80px, 12vw, 140px);
-    font-weight: 900;
-    letter-spacing: -0.06em;
-    color: rgba(255,255,255,0.04);
-    pointer-events: none;
-    user-select: none;
-    line-height: 1;
-}
-.newsletter-text {
-    flex: 1;
-    min-width: 280px;
-}
-.newsletter-eyebrow {
-    display: inline-block;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: #e63946;
-    margin-bottom: 14px;
-}
-.newsletter-text h3 {
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    font-weight: 900; color: #fff;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
-    margin-bottom: 12px;
-}
-.newsletter-text h3 em {
-    font-style: normal;
-    color: #e63946;
-}
-.newsletter-text p {
-    font-size: 14px;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.65;
-    max-width: 420px;
-}
-.newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex-shrink: 0;
-    width: 340px;
-}
-@media (max-width: 700px) { .newsletter-form { width: 100%; } }
-.newsletter-input {
-    padding: 15px 20px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.06);
-    color: #fff;
-    font-size: 14px; font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
-}
-.newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
-.newsletter-input:focus {
-    border-color: #e63946;
-    background: rgba(255,255,255,0.09);
-}
-.btn-subscribe {
-    padding: 15px 28px;
-    border-radius: 14px;
-    background: #e63946; color: #fff;
-    font-size: 14px; font-weight: 700;
-    border: none; cursor: pointer; font-family: inherit;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: background 0.2s, transform 0.2s;
-    letter-spacing: -0.01em;
-}
-.btn-subscribe:hover { background: rgba(193,18,31,0.65); transform: translateY(-2px); }
-.newsletter-note {
-    font-size: 11px;
-    color: rgba(255,255,255,0.25);
-    text-align: center;
-}
-
-/* footer */
-.footer {
-    background: #1a1a1a;
-    color: rgba(255,255,255,0.65);
-    padding: 64px 0 32px;
-    border-top: 3px solid #e63946;
-}
-.footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 56px;
-}
-.footer-brand p { font-size: 13px; line-height: 1.65; max-width: 300px; margin-bottom: 24px; }
-.footer-logo-wrap {
-    display: inline-flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.footer-logo-wrap img {
-    height: 40px; width: auto;
-    display: block; object-fit: contain;
-    filter: invert(1) hue-rotate(180deg);
-}
-.footer-social { display: flex; gap: 10px; }
-.social-btn {
-    width: 38px; height: 38px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.1);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; color: rgba(255,255,255,0.7);
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-}
-.social-btn:hover { background: rgba(230,57,70,0.65); color: #fff; border-color: transparent; }
-.footer-col h5 {
-    font-size: 13px; font-weight: 700;
-    color: #fff; margin-bottom: 18px;
-    letter-spacing: 0.01em;
-}
-.footer-col ul li { margin-bottom: 10px; }
-.footer-col ul li a { font-size: 13px; color: rgba(255,255,255,0.55); transition: color 0.15s; }
-.footer-col ul li a:hover { color: #fff; }
-.footer-bottom {
-    padding-top: 28px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-.footer-bottom p { font-size: 12px; }
-.footer-bottom-links { display: flex; gap: 20px; }
-.footer-bottom-links a { font-size: 12px; color: rgba(255,255,255,0.4); transition: color 0.15s; }
-.footer-bottom-links a:hover { color: #fff; }
-
-/* hamburger & menu mobile */
-.nav-hamburger {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    transition: background 0.2s;
-    flex-shrink: 0;
-}
-.nav-hamburger:hover { background: rgba(0,0,0,0.06); }
-.nav-hamburger span {
-    display: block;
-    width: 22px; height: 2px;
-    background: #111;
-    border-radius: 2px;
-    transition: transform 0.3s, opacity 0.3s;
-    transform-origin: center;
-}
-.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-.nav-mobile-menu {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255,255,255,0.98);
-    backdrop-filter: blur(20px);
-    z-index: 9998;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    padding: 80px 24px 40px;
-    overflow-y: auto;
-}
-.nav-mobile-menu.open { display: flex; }
-.nav-mobile-menu a {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 16px 20px;
-    font-size: 22px;
-    font-weight: 700;
-    color: #111;
-    border-bottom: 1px solid #f0f0f0;
-    letter-spacing: -0.02em;
-    transition: color 0.15s;
-}
-.nav-mobile-menu a:last-child { border-bottom: none; }
-.nav-mobile-menu a:hover { color: #e63946; }
-.nav-mobile-cta {
-    margin-top: 24px;
-    display: inline-flex;
-    align-items: center;
-    background: #e63946;
-    color: #fff !important;
-    border-radius: 980px;
-    padding: 14px 36px !important;
-    font-size: 16px !important;
-    border-bottom: none !important;
-    width: auto !important;
-}
-
-/* responsif mobile */
-@media (max-width: 768px) {
-    /* Container */
-    .container { padding: 0 16px; }
-
-    /* Navbar */
-    .navbar-wrap { padding: 12px 16px; }
-    .navbar {
-        max-width: 100%;
-        border-radius: 16px;
-        height: 52px;
-        padding: 6px 10px;
-        justify-content: space-between;
-    }
-    .navbar-left-links,
-    .navbar-right-links,
-    .navbar-cta { display: none !important; }
-    .nav-hamburger { display: flex; }
-    .navbar-logo { padding: 0 8px; }
-
-    /* Hero */
-    .hero { padding-top: 60px; min-height: unset; }
-    .hero-inner {
-        padding: 8px 0 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-    }
-    /* Urutan konten yang logis: judul 1 → gambar → deskripsi → tombol */
-    .hero-inner > .hero-headline:nth-child(1) { order: 1; width: 100%; }
-    .hero-inner > .hero-headline--sub { display: none !important; }
-    .hero-inner > .hero-mid              { order: 2; }
-    .hero-inner > .hero-bottom           { order: 3; }
-    .hero-headline h1 {
-        font-size: clamp(2rem, 8vw, 2.8rem);
-        line-height: 1.06;
-        margin-bottom: 0;
-    }
-    /* Dekorasi bintang animasi disembunyikan */
-    .hero-deco-tl, .hero-deco-tr,
-    .hero-deco-bl, .hero-deco-br { display: none !important; }
-    /* Hero-mid jadi kolom: gambar di atas, deskripsi di bawah */
-    .hero-mid {
-        max-width: 100%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-    }
-    .hero-center { order: 1; }
-    /* Tampilkan deskripsi perusahaan di mobile (sebelumnya hidden) */
-    .hero-info-left {
-        order: 2;
-        position: static !important;
-        transform: none !important;
-        max-width: 100%;
-        text-align: center;
-        display: block !important;
-        margin-top: 4px;
-        padding: 0 12px;
-    }
-    .hero-info-left p { font-size: 12px; color: #666; line-height: 1.4; }
-    .hero-info-right { display: none !important; }
-    /* Gambar slider ukuran layak */
-    .hero-slider-wrap, .hero-slider {
-        width: 180px !important;
-        height: 180px !important;
-    }
-    /* Tombol CTA full-width agar mudah dipencet */
-    .hero-bottom {
-        margin-top: 10px;
-        gap: 8px;
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .btn-hero-primary, .btn-hero-secondary {
-        width: 100%;
-        justify-content: center;
-        font-size: 14px;
-        padding: 12px 20px;
-    }
-
-    /* Features bar */
-    .features-bar-inner { flex-direction: column; }
-    .feature-item {
-        padding: 16px 20px;
-        border-right: none;
-        border-bottom: 1px solid #f0f0f0;
-    }
-    .feature-item:last-child { border-bottom: none; }
-
-    /* Section heading */
-    .section-heading { margin-bottom: 32px; }
-    .section-title { font-size: clamp(1.5rem, 6vw, 2rem); }
-
-    /* Categories */
-    .categories-section { padding: 56px 0; }
-    .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .cat-card { min-height: 220px; border-radius: 18px; }
-    .cat-title { font-size: 1rem; }
-
-    /* Testimonials */
-    .testimonials-section { padding: 56px 0; }
-    .testimonials-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
-    .testi-card { min-width: 100%; width: 100%; padding: 24px; min-height: unset; }
-    .testi-text { font-size: 15px; }
-
-    /* Products */
-    .products-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
-    .product-body { padding: 12px 14px 16px; }
-    .product-price { font-size: 15px; }
-
-    /* Blog */
-    .blog-section { padding: 56px 0; }
-    .blog-grid { grid-template-columns: 1fr; }
-    .blog-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-    .blog-list-thumb { width: 80px; height: 60px; }
-
-    /* Newsletter */
-    .newsletter-section { padding: 48px 0; }
-    .newsletter-card {
-        padding: 36px 24px;
-        border-radius: 20px;
-        flex-direction: column;
-        gap: 28px;
-    }
-    .newsletter-form { width: 100%; }
-    .newsletter-text h3 { font-size: clamp(1.5rem, 6vw, 2rem); }
-
-    /* Footer */
-    .footer { padding: 48px 0 24px; }
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 28px;
-        margin-bottom: 36px;
-    }
-    .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    .footer-bottom-links { flex-wrap: wrap; gap: 12px; }
-}
-
-@media (max-width: 480px) {
-    /* Navbar */
-    .navbar-logo img { height: 38px; }
-
-    /* Hero */
-    .hero { padding-top: 64px; min-height: unset; }
-    .hero-headline h1 { font-size: clamp(1.8rem, 9vw, 2.4rem); }
-    .hero-slider-wrap, .hero-slider {
-        width: 160px !important;
-        height: 160px !important;
-    }
-    .btn-hero-primary, .btn-hero-secondary { font-size: 14px; padding: 13px 18px; }
-
-    /* Categories */
-    .categories-grid { grid-template-columns: 1fr; }
-    .cat-card { min-height: 200px; }
-
-    /* Blog list */
-    .blog-list-item { flex-direction: column; align-items: flex-start; }
-    .blog-list-thumb { width: 100%; height: 160px; border-radius: 10px; }
-
-    /* Footer */
-    .footer-grid { grid-template-columns: 1fr; gap: 24px; }
-    .footer-bottom-links { gap: 10px; }
-}
-</style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
 
 <!-- navbar -->
-<div class="navbar-wrap" id="navbarWrap">
-    <nav class="navbar" id="navbar">
+<div class="fixed inset-x-0 top-0 z-[9999] pt-[18px] px-6 flex flex-col items-center pointer-events-none gap-2" id="navbarWrap">
+    <nav class="pointer-events-auto flex items-center bg-[rgba(255,255,255,0.88)] backdrop-saturate-[200%] backdrop-blur-[24px] border border-[rgba(0,0,0,0.08)] rounded-[980px] p-[6px] h-[52px] max-w-[860px] w-full gap-1 transition-shadow duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.08)]" id="navbar">
         <ul class="navbar-left-links">
             <li><a href="#hero" class="active">Home</a></li>
             <li><a href="#categories">Kategori</a></li>
             <li><a href="#products">Produk</a></li>
         </ul>
 
-        <a href="/" class="navbar-logo">
-            <img src="{{ asset('img/logo/mitraoke-removebg-preview.png') }}" alt="MitraOke">
+        <a href="/" class="px-4 shrink-0 flex items-center">
+            <img src="{{ asset('img/logo/mitraoke-removebg-preview.png') }}" alt="MitraOke" class="h-[52px] w-auto block object-contain max-[480px]:h-[38px]">
         </a>
 
         <ul class="navbar-right-links">
@@ -1298,11 +30,57 @@ ul { list-style: none; }
             <li><a href="#about">Tentang</a></li>
         </ul>
 
-        <a href="https://wa.me/6281252141397" class="navbar-cta" target="_blank">Hubungi Kami</a>
+        <a href="https://wa.me/6281252141397" class="inline-flex items-center bg-[#e63946] text-white text-[12px] font-bold py-2 px-5 rounded-[980px] transition-[background,transform] duration-200 whitespace-nowrap shrink-0 ml-1 hover:bg-[rgba(193,18,31,0.65)] hover:scale-[1.03]" target="_blank">Hubungi Kami</a>
+
         <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
             <span></span><span></span><span></span>
         </button>
     </nav>
+
+    <!-- pilih cabang kota -->
+    <div class="flex gap-2 items-center pointer-events-auto pb-[10px]">
+        <div class="city-item" id="cityItemJogja">
+            <button class="inline-flex items-center gap-[5px] py-[5px] px-[10px] bg-[rgba(230,57,70,0.07)] border-[1.5px] border-[rgba(230,57,70,0.2)] rounded-[980px] cursor-pointer font-[Montserrat,sans-serif] text-[12px] font-semibold text-[#e63946] leading-none transition-[background,border-color] duration-150 whitespace-nowrap hover:bg-[rgba(230,57,70,0.12)]" onclick="toggleCity(event,this)">
+                📍 Yogyakarta
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="city-card">
+                <div class="p-3 pb-[10px] flex items-center gap-[9px]">
+                    <img src="{{ asset('img/logo/jogja.jpeg') }}" alt="Jogja" class="w-[30px] h-[30px] object-contain rounded-[4px] shrink-0 block">
+                    <div>
+                        <div class="text-[13px] font-bold text-[#202124] leading-[1.2]">Cabang Yogyakarta</div>
+                        <span class="text-[11px] text-[#9aa0a6] block mt-[1px]">Mitra Oke</span>
+                    </div>
+                </div>
+                <div class="h-px bg-[#f1f3f4]"></div>
+                <div class="flex justify-end py-1 px-[6px] gap-0.5">
+                    <button class="py-[6px] px-2 bg-transparent text-[#5f6368] border-none text-[12px] font-semibold cursor-pointer rounded-[4px] font-[Montserrat,sans-serif] transition-colors duration-100 hover:bg-[#f1f3f4]" onclick="closeCity(event)">Batal</button>
+                    <a href="{{ route('cabang.jogja') }}" class="py-[6px] px-2 bg-transparent text-[#1a73e8] border-none text-[12px] font-bold cursor-pointer rounded-[4px] font-[Montserrat,sans-serif] transition-colors duration-100 hover:bg-[#e8f0fe] inline-block no-underline">Kunjungi →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="city-item" id="cityItemMalang">
+            <button class="inline-flex items-center gap-[5px] py-[5px] px-[10px] bg-[rgba(230,57,70,0.07)] border-[1.5px] border-[rgba(230,57,70,0.2)] rounded-[980px] cursor-pointer font-[Montserrat,sans-serif] text-[12px] font-semibold text-[#e63946] leading-none transition-[background,border-color] duration-150 whitespace-nowrap hover:bg-[rgba(230,57,70,0.12)]" onclick="toggleCity(event,this)">
+                📍 Malang
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="city-card">
+                <div class="p-3 pb-[10px] flex items-center gap-[9px]">
+                    <img src="{{ asset('img/logo/malang.jpeg') }}" alt="Malang" class="w-[30px] h-[30px] object-contain rounded-[4px] shrink-0 block">
+                    <div>
+                        <div class="text-[13px] font-bold text-[#202124] leading-[1.2]">Cabang Malang</div>
+                        <span class="text-[11px] text-[#9aa0a6] block mt-[1px]">Mitra Oke</span>
+                    </div>
+                </div>
+                <div class="h-px bg-[#f1f3f4]"></div>
+                <div class="flex justify-end py-1 px-[6px] gap-0.5">
+                    <button class="py-[6px] px-2 bg-transparent text-[#5f6368] border-none text-[12px] font-semibold cursor-pointer rounded-[4px] font-[Montserrat,sans-serif] transition-colors duration-100 hover:bg-[#f1f3f4]" onclick="closeCity(event)">Batal</button>
+                    <a href="{{ route('cabang.malang') }}" class="py-[6px] px-2 bg-transparent text-[#1a73e8] border-none text-[12px] font-bold cursor-pointer rounded-[4px] font-[Montserrat,sans-serif] transition-colors duration-100 hover:bg-[#e8f0fe] inline-block no-underline">Kunjungi →</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- menu mobile layar penuh -->
@@ -1317,41 +95,41 @@ ul { list-style: none; }
 </div>
 
 <!-- hero -->
-<section class="hero" id="hero">
+<section class="min-h-screen pt-[130px] overflow-hidden relative flex items-center max-md:pt-[120px] max-md:min-h-0 max-[480px]:pt-[120px]" id="hero">
     <div class="container">
-        <div class="hero-inner">
+        <div class="relative w-full py-8 pb-14 max-md:py-2 max-md:pb-4 max-md:flex max-md:flex-col max-md:items-center max-md:gap-0">
 
             <!-- judul baris 1 -->
-            <div class="hero-headline">
-                <h1>Solusi Peralatan<br>Kantor <em>Premium</em></h1>
+            <div class="text-center relative z-[2]">
+                <h1 class="text-[clamp(2.6rem,6vw,5.2rem)] font-black tracking-[-0.04em] leading-[1.02] text-[#111] max-[900px]:text-[clamp(2rem,7vw,3.2rem)] max-md:text-[clamp(2rem,8vw,2.8rem)] max-[480px]:text-[clamp(1.8rem,9vw,2.4rem)]">Solusi Peralatan<br>Kantor <em class="not-italic text-[#e63946]">Premium</em></h1>
             </div>
 
             <!-- tengah: info kiri | gambar | statistik kanan -->
-            <div class="hero-mid">
+            <div class="relative max-w-[900px] mx-auto -my-4 flex items-center justify-center max-[900px]:flex-col max-[900px]:gap-0 max-md:max-w-full">
                 <!-- dekorasi -->
-                <div class="hero-deco hero-deco-tl"><span class="asterisk asterisk-lg">✦</span></div>
-                <div class="hero-deco hero-deco-tr"><span class="asterisk asterisk-sm">✦</span></div>
-                <div class="hero-deco hero-deco-bl"><span class="asterisk asterisk-sm">✦</span></div>
+                <div class="absolute z-[4] top-[18px] left-0 max-[900px]:hidden"><span class="inline-block leading-[1] text-[#e63946] select-none spin-slow text-[2.8rem]">✦</span></div>
+                <div class="absolute z-[4] top-[18px] right-0 max-[900px]:hidden"><span class="inline-block leading-[1] text-[#e63946] select-none spin-slow text-[1.2rem]">✦</span></div>
+                <div class="absolute z-[4] bottom-[20px] left-[20px] max-[900px]:hidden"><span class="inline-block leading-[1] text-[#e63946] select-none spin-slow text-[1.2rem]">✦</span></div>
 
                 <!-- teks kiri -->
-                <div class="hero-info-left">
-                    <p>Dari sistem konferensi hingga furnitur kantor, kami menghadirkan solusi terpadu bersertifikasi TKDN untuk instansi &amp; korporasi Indonesia.</p>
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 max-w-[210px] z-[3] max-[900px]:static max-[900px]:translate-y-0 max-[900px]:max-w-full max-[900px]:text-center max-[900px]:px-4 max-[900px]:mt-2 max-md:order-2 max-md:mt-1 max-md:px-3 max-md:max-w-full max-md:text-center">
+                    <p class="text-[13px] text-[#777] leading-[1.7] max-md:text-[12px] max-md:text-[#666] max-md:leading-[1.4]">Dari sistem konferensi hingga furnitur kantor, kami menghadirkan solusi terpadu bersertifikasi TKDN untuk instansi &amp; korporasi Indonesia.</p>
                 </div>
 
                 <!-- slider gambar tengah -->
-                <div class="hero-center">
-                    <div class="hero-slider-wrap">
-                        <div class="hero-slider">
-                            <div class="hero-slide hero-slide-jogja active">
-                                <img src="{{ asset('img/logo/jogja.jpeg') }}" alt="Jogja">
+                <div class="flex justify-center items-center max-md:order-1">
+                    <div class="relative w-[360px] shrink-0 flex flex-col items-center gap-[14px] max-[900px]:w-[180px] max-md:w-[180px] max-[480px]:w-[160px]">
+                        <div class="w-[360px] h-[360px] relative overflow-hidden bg-transparent max-[900px]:w-[180px] max-[900px]:h-[180px] max-md:w-[180px] max-md:h-[180px] max-[480px]:w-[160px] max-[480px]:h-[160px]">
+                            <div class="hero-slide active">
+                                <img src="{{ asset('img/logo/jogja.jpeg') }}" alt="Jogja" class="brightness-[1.05] contrast-[1.05]">
                             </div>
-                            <div class="hero-slide hero-slide-foto">
+                            <div class="hero-slide">
                                 <img src="{{ asset('img/hero/kamera-removebg-preview.png') }}" alt="Produk Kamera">
                             </div>
-                            <div class="hero-slide hero-slide-malang">
-                                <img src="{{ asset('img/logo/malang.jpeg') }}" alt="Malang">
+                            <div class="hero-slide">
+                                <img src="{{ asset('img/logo/malang.jpeg') }}" alt="Malang" class="brightness-[1.05] contrast-[1.05]">
                             </div>
-                            <div class="hero-slide hero-slide-foto">
+                            <div class="hero-slide">
                                 <img src="{{ asset('img/hero/streaming-removebg-preview.png') }}" alt="Produk Streaming">
                             </div>
                         </div>
@@ -1359,27 +137,27 @@ ul { list-style: none; }
                 </div>
 
                 <!-- statistik kanan -->
-                <div class="hero-info-right">
-                    <div class="hero-years">
-                        <span class="stars">★★★★★</span>
-                        <strong>15 Tahun</strong>
-                        <small>Pengalaman</small>
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 text-right z-[3] max-[900px]:hidden">
+                    <div class="inline-flex flex-col items-end">
+                        <span class="text-[#fbbf24] text-[14px] tracking-[3px] mb-[2px]">★★★★★</span>
+                        <strong class="text-[2.2rem] font-black text-[#111] leading-[1] tracking-[-0.04em] block">15 Tahun</strong>
+                        <small class="text-[12px] text-[#999] mt-[2px]">Pengalaman</small>
                     </div>
                 </div>
             </div>
 
             <!-- judul baris 2 -->
-            <div class="hero-headline hero-headline--sub">
-                <h1>Terlengkap &amp; <em>Terpercaya</em></h1>
+            <div class="text-center relative z-[2] max-[900px]:hidden">
+                <h1 class="text-[clamp(2.6rem,6vw,5.2rem)] font-black tracking-[-0.04em] leading-[1.02] text-[#111]">Terlengkap &amp; <em class="not-italic text-[#e63946]">Terpercaya</em></h1>
             </div>
 
             <!-- tombol CTA -->
-            <div class="hero-bottom">
-                <a href="#products" class="btn-hero-primary">
+            <div class="flex justify-center items-center gap-3 mt-10 flex-wrap max-[900px]:mt-5 max-md:mt-[10px] max-md:gap-2 max-md:w-full max-md:flex-col max-md:items-stretch max-md:order-3">
+                <a href="#products" class="inline-flex items-center gap-2 bg-[#e63946] text-white text-[14px] font-bold py-[14px] px-7 rounded-[980px] transition-[transform,box-shadow] duration-200 shadow-[0_4px_24px_rgba(230,57,70,0.28)] hover:-translate-y-[2px] hover:shadow-[0_8px_36px_rgba(230,57,70,0.38)] hover:bg-[#c1121f] max-md:w-full max-md:justify-center max-md:py-3 max-md:px-5 max-[480px]:py-[13px] max-[480px]:px-[18px]">
                     Lihat Produk
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
-                <a href="https://wa.me/6281252141397" class="btn-hero-secondary" target="_blank">
+                <a href="https://wa.me/6281252141397" class="inline-flex items-center gap-2 bg-white border-[1.5px] border-[rgba(0,0,0,0.12)] text-[#333] text-[14px] font-semibold py-[14px] px-7 rounded-[980px] transition-[background,border-color,transform] duration-200 shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:bg-[#f8f8f8] hover:border-[rgba(0,0,0,0.18)] hover:-translate-y-[1px] max-md:w-full max-md:justify-center max-md:py-3 max-md:px-5 max-[480px]:py-[13px] max-[480px]:px-[18px]" target="_blank">
                     Mari Berkolaborasi
                 </a>
             </div>
@@ -1389,21 +167,21 @@ ul { list-style: none; }
 </section>
 
 <!-- bar fitur -->
-<div class="features-bar">
+<div class="bg-white border-t border-b border-[#f0f0f0]">
     <div class="container">
-        <div class="features-bar-inner">
-            <div class="feature-item reveal reveal-d1">
-                <div class="feature-icon">🔒</div>
-                <div class="feature-text">
-                    <h5>Garansi Resmi</h5>
-                    <p>Garansi produk 1–3 tahun</p>
+        <div class="flex justify-center flex-wrap max-md:flex-col">
+            <div class="reveal reveal-d1 flex items-center gap-[14px] py-[22px] px-9 border-r border-[#f0f0f0] max-md:py-4 max-md:px-5 max-md:border-r-0 max-md:border-b max-md:border-[#f0f0f0]">
+                <div class="w-[44px] h-[44px] shrink-0 bg-[#f8f8f8] rounded-[12px] flex items-center justify-center text-[22px]">🔒</div>
+                <div>
+                    <h5 class="text-[13px] font-bold text-[#111]">Garansi Resmi</h5>
+                    <p class="text-[11px] text-[#999] mt-[2px] leading-[1.4]">Garansi produk 1–3 tahun</p>
                 </div>
             </div>
-            <div class="feature-item reveal reveal-d2">
-                <div class="feature-icon">💬</div>
-                <div class="feature-text">
-                    <h5>Support 24/7</h5>
-                    <p>Siap bantu kapan pun</p>
+            <div class="reveal reveal-d2 flex items-center gap-[14px] py-[22px] px-9 max-md:py-4 max-md:px-5">
+                <div class="w-[44px] h-[44px] shrink-0 bg-[#f8f8f8] rounded-[12px] flex items-center justify-center text-[22px]">💬</div>
+                <div>
+                    <h5 class="text-[13px] font-bold text-[#111]">Support 24/7</h5>
+                    <p class="text-[11px] text-[#999] mt-[2px] leading-[1.4]">Siap bantu kapan pun</p>
                 </div>
             </div>
         </div>
@@ -1411,78 +189,78 @@ ul { list-style: none; }
 </div>
 
 <!-- kategori -->
-<section class="categories-section" id="categories">
+<section class="py-20 bg-[#f8f8f8] max-md:py-14" id="categories">
     <div class="container">
-        <div class="section-heading reveal">
-            <div class="section-pill">Kategori</div>
-            <h2 class="section-title">Temukan sesuai kebutuhan.</h2>
-            <p class="section-sub">Pilih dari berbagai kategori produk kantor yang lengkap dan terpercaya.</p>
+        <div class="reveal text-center mb-12 max-md:mb-8">
+            <div class="inline-block bg-[rgba(230,57,70,0.07)] text-[#e63946] text-[11px] font-bold tracking-[0.08em] uppercase py-[5px] px-[14px] rounded-[980px] mb-3">Kategori</div>
+            <h2 class="text-[clamp(1.8rem,3vw,2.6rem)] font-extrabold tracking-[-0.03em] text-[#111] mb-[10px] max-md:text-[clamp(1.5rem,6vw,2rem)]">Temukan sesuai kebutuhan.</h2>
+            <p class="text-[15px] text-[#888] max-w-[520px] mx-auto leading-[1.6]">Pilih dari berbagai kategori produk kantor yang lengkap dan terpercaya.</p>
         </div>
 
-        <div class="categories-grid">
-            <div class="cat-card cat-card--red reveal reveal-d1">
-                <div class="cat-card-text">
-                    <div class="cat-label">Perlengkapan Kantor</div>
-                    <div class="cat-title">Alat Tulis<br>Kantor</div>
-                    <a href="/peralatan-kantor" class="btn-browse">Browse ›</a>
+        <div class="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-md:gap-3 max-[500px]:grid-cols-1">
+            <div class="group reveal reveal-d1 rounded-[24px] overflow-hidden min-h-[320px] flex flex-col relative cursor-pointer transition-[transform,box-shadow] duration-[350ms] ease-[cubic-bezier(.4,0,.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.10)] bg-gradient-to-br from-[#e63946] to-[#c1121f] text-white hover:-translate-y-2 hover:scale-[1.01] hover:shadow-[0_24px_56px_rgba(0,0,0,0.18)] max-md:min-h-[220px] max-md:rounded-[18px] max-[480px]:min-h-[200px]">
+                <div class="absolute inset-0 z-[1]">
+                    <img class="w-full h-full object-contain object-bottom px-4 pt-6 pb-0 drop-shadow-[0_-4px_24px_rgba(0,0,0,0.15)] transition-transform duration-500 ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08] group-hover:-translate-y-[6px]" src="{{ asset('img/kategori/atk-removebg-preview.png') }}" alt="ATK">
                 </div>
-                <div class="cat-img-wrap">
-                    <img class="cat-img" src="{{ asset('img/kategori/atk-removebg-preview.png') }}" alt="ATK">
-                </div>
-            </div>
-
-            <div class="cat-card cat-card--yellow reveal reveal-d2">
-                <div class="cat-card-text">
-                    <div class="cat-label">Kebersihan</div>
-                    <div class="cat-title">Alat<br>Kebersihan</div>
-                    <a href="/peralatan-kantor" class="btn-browse">Browse ›</a>
-                </div>
-                <div class="cat-img-wrap">
-                    <img class="cat-img" src="{{ asset('img/kategori/Alat_Kebersihan-removebg-preview.png') }}" alt="Kebersihan">
+                <div class="relative z-[2] mt-auto px-[22px] pb-[22px] pt-20 bg-gradient-to-t from-[rgba(0,0,0,0.55)] to-transparent">
+                    <div class="text-[10px] font-bold tracking-[0.1em] uppercase opacity-85 mb-1">Perlengkapan Kantor</div>
+                    <div class="text-[clamp(1.1rem,1.8vw,1.4rem)] font-extrabold tracking-[-0.02em] leading-[1.2] mb-3 max-md:text-[1rem]">Alat Tulis<br>Kantor</div>
+                    <a href="/peralatan-kantor" class="inline-flex items-center gap-[6px] bg-[rgba(255,255,255,0.22)] backdrop-blur-[8px] border border-[rgba(255,255,255,0.35)] text-white text-[11px] font-semibold py-[6px] px-[14px] rounded-[980px] w-fit transition-colors duration-200 hover:bg-[rgba(255,255,255,0.42)]">Browse ›</a>
                 </div>
             </div>
 
-            <div class="cat-card cat-card--blue reveal reveal-d3">
-                <div class="cat-card-text">
-                    <div class="cat-label">Kesehatan</div>
-                    <div class="cat-title">Alat<br>Kesehatan</div>
-                    <a href="/peralatan-kantor" class="btn-browse">Browse ›</a>
+            <div class="group reveal reveal-d2 rounded-[24px] overflow-hidden min-h-[320px] flex flex-col relative cursor-pointer transition-[transform,box-shadow] duration-[350ms] ease-[cubic-bezier(.4,0,.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.10)] bg-gradient-to-br from-[#ffbe0b] to-[#fb5607] text-white hover:-translate-y-2 hover:scale-[1.01] hover:shadow-[0_24px_56px_rgba(0,0,0,0.18)] max-md:min-h-[220px] max-md:rounded-[18px] max-[480px]:min-h-[200px]">
+                <div class="absolute inset-0 z-[1]">
+                    <img class="w-full h-full object-contain object-bottom px-4 pt-6 pb-0 drop-shadow-[0_-4px_24px_rgba(0,0,0,0.15)] transition-transform duration-500 ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08] group-hover:-translate-y-[6px]" src="{{ asset('img/kategori/Alat_Kebersihan-removebg-preview.png') }}" alt="Kebersihan">
                 </div>
-                <div class="cat-img-wrap">
-                    <img class="cat-img" src="{{ asset('img/kategori/Alat_Kesehatan-removebg-preview.png') }}" alt="Kesehatan">
-                </div>
-            </div>
-
-            <div class="cat-card cat-card--green reveal reveal-d4">
-                <div class="cat-card-text">
-                    <div class="cat-label">Peralatan Rumah</div>
-                    <div class="cat-title">Home<br>Appliances</div>
-                    <a href="/peralatan-kantor" class="btn-browse">Browse ›</a>
-                </div>
-                <div class="cat-img-wrap">
-                    <img class="cat-img" src="{{ asset('img/kategori/Home_-removebg-preview.png') }}" alt="Home Appliances">
+                <div class="relative z-[2] mt-auto px-[22px] pb-[22px] pt-20 bg-gradient-to-t from-[rgba(0,0,0,0.55)] to-transparent">
+                    <div class="text-[10px] font-bold tracking-[0.1em] uppercase opacity-85 mb-1">Kebersihan</div>
+                    <div class="text-[clamp(1.1rem,1.8vw,1.4rem)] font-extrabold tracking-[-0.02em] leading-[1.2] mb-3 max-md:text-[1rem]">Alat<br>Kebersihan</div>
+                    <a href="/peralatan-kantor" class="inline-flex items-center gap-[6px] bg-[rgba(255,255,255,0.22)] backdrop-blur-[8px] border border-[rgba(255,255,255,0.35)] text-white text-[11px] font-semibold py-[6px] px-[14px] rounded-[980px] w-fit transition-colors duration-200 hover:bg-[rgba(255,255,255,0.42)]">Browse ›</a>
                 </div>
             </div>
 
-            <div class="cat-card cat-card--dark reveal reveal-d5">
-                <div class="cat-card-text">
-                    <div class="cat-label">Interior Kantor</div>
-                    <div class="cat-title">Furniture<br>Kantor</div>
-                    <a href="/peralatan-kantor" class="btn-browse">Browse ›</a>
+            <div class="group reveal reveal-d3 rounded-[24px] overflow-hidden min-h-[320px] flex flex-col relative cursor-pointer transition-[transform,box-shadow] duration-[350ms] ease-[cubic-bezier(.4,0,.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.10)] bg-gradient-to-br from-[#3a86ff] to-[#0043ce] text-white hover:-translate-y-2 hover:scale-[1.01] hover:shadow-[0_24px_56px_rgba(0,0,0,0.18)] max-md:min-h-[220px] max-md:rounded-[18px] max-[480px]:min-h-[200px]">
+                <div class="absolute inset-0 z-[1]">
+                    <img class="w-full h-full object-contain object-bottom px-4 pt-6 pb-0 drop-shadow-[0_-4px_24px_rgba(0,0,0,0.15)] transition-transform duration-500 ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08] group-hover:-translate-y-[6px]" src="{{ asset('img/kategori/Alat_Kesehatan-removebg-preview.png') }}" alt="Kesehatan">
                 </div>
-                <div class="cat-img-wrap">
-                    <img class="cat-img" src="{{ asset('img/kategori/roombooking-removebg-preview.png') }}" alt="Furniture">
+                <div class="relative z-[2] mt-auto px-[22px] pb-[22px] pt-20 bg-gradient-to-t from-[rgba(0,0,0,0.55)] to-transparent">
+                    <div class="text-[10px] font-bold tracking-[0.1em] uppercase opacity-85 mb-1">Kesehatan</div>
+                    <div class="text-[clamp(1.1rem,1.8vw,1.4rem)] font-extrabold tracking-[-0.02em] leading-[1.2] mb-3 max-md:text-[1rem]">Alat<br>Kesehatan</div>
+                    <a href="/peralatan-kantor" class="inline-flex items-center gap-[6px] bg-[rgba(255,255,255,0.22)] backdrop-blur-[8px] border border-[rgba(255,255,255,0.35)] text-white text-[11px] font-semibold py-[6px] px-[14px] rounded-[980px] w-fit transition-colors duration-200 hover:bg-[rgba(255,255,255,0.42)]">Browse ›</a>
                 </div>
             </div>
 
-            <div class="cat-card cat-card--purple reveal reveal-d6">
-                <div class="cat-card-text">
-                    <div class="cat-label">Teknologi</div>
-                    <div class="cat-title">IT Hardware<br>&amp; Software</div>
-                    <a href="/peralatan-kantor" class="btn-browse">Browse ›</a>
+            <div class="group reveal reveal-d4 rounded-[24px] overflow-hidden min-h-[320px] flex flex-col relative cursor-pointer transition-[transform,box-shadow] duration-[350ms] ease-[cubic-bezier(.4,0,.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.10)] bg-gradient-to-br from-[#4cc9f0] to-[#4361ee] text-white hover:-translate-y-2 hover:scale-[1.01] hover:shadow-[0_24px_56px_rgba(0,0,0,0.18)] max-md:min-h-[220px] max-md:rounded-[18px] max-[480px]:min-h-[200px]">
+                <div class="absolute inset-0 z-[1]">
+                    <img class="w-full h-full object-contain object-bottom px-4 pt-6 pb-0 drop-shadow-[0_-4px_24px_rgba(0,0,0,0.15)] transition-transform duration-500 ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08] group-hover:-translate-y-[6px]" src="{{ asset('img/kategori/Home_-removebg-preview.png') }}" alt="Home Appliances">
                 </div>
-                <div class="cat-img-wrap">
-                    <img class="cat-img" src="{{ asset('img/kategori/IT_Hardware-removebg-preview.png') }}" alt="IT Hardware">
+                <div class="relative z-[2] mt-auto px-[22px] pb-[22px] pt-20 bg-gradient-to-t from-[rgba(0,0,0,0.55)] to-transparent">
+                    <div class="text-[10px] font-bold tracking-[0.1em] uppercase opacity-85 mb-1">Peralatan Rumah</div>
+                    <div class="text-[clamp(1.1rem,1.8vw,1.4rem)] font-extrabold tracking-[-0.02em] leading-[1.2] mb-3 max-md:text-[1rem]">Home<br>Appliances</div>
+                    <a href="/peralatan-kantor" class="inline-flex items-center gap-[6px] bg-[rgba(255,255,255,0.22)] backdrop-blur-[8px] border border-[rgba(255,255,255,0.35)] text-white text-[11px] font-semibold py-[6px] px-[14px] rounded-[980px] w-fit transition-colors duration-200 hover:bg-[rgba(255,255,255,0.42)]">Browse ›</a>
+                </div>
+            </div>
+
+            <div class="group reveal reveal-d5 rounded-[24px] overflow-hidden min-h-[320px] flex flex-col relative cursor-pointer transition-[transform,box-shadow] duration-[350ms] ease-[cubic-bezier(.4,0,.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.10)] bg-gradient-to-br from-[#2b2d42] to-[#1a1a2e] text-white hover:-translate-y-2 hover:scale-[1.01] hover:shadow-[0_24px_56px_rgba(0,0,0,0.18)] max-md:min-h-[220px] max-md:rounded-[18px] max-[480px]:min-h-[200px]">
+                <div class="absolute inset-0 z-[1]">
+                    <img class="w-full h-full object-contain object-bottom px-4 pt-6 pb-0 drop-shadow-[0_-4px_24px_rgba(0,0,0,0.15)] transition-transform duration-500 ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08] group-hover:-translate-y-[6px]" src="{{ asset('img/kategori/roombooking-removebg-preview.png') }}" alt="Furniture">
+                </div>
+                <div class="relative z-[2] mt-auto px-[22px] pb-[22px] pt-20 bg-gradient-to-t from-[rgba(0,0,0,0.55)] to-transparent">
+                    <div class="text-[10px] font-bold tracking-[0.1em] uppercase opacity-85 mb-1">Interior Kantor</div>
+                    <div class="text-[clamp(1.1rem,1.8vw,1.4rem)] font-extrabold tracking-[-0.02em] leading-[1.2] mb-3 max-md:text-[1rem]">Furniture<br>Kantor</div>
+                    <a href="/peralatan-kantor" class="inline-flex items-center gap-[6px] bg-[rgba(255,255,255,0.22)] backdrop-blur-[8px] border border-[rgba(255,255,255,0.35)] text-white text-[11px] font-semibold py-[6px] px-[14px] rounded-[980px] w-fit transition-colors duration-200 hover:bg-[rgba(255,255,255,0.42)]">Browse ›</a>
+                </div>
+            </div>
+
+            <div class="group reveal reveal-d6 rounded-[24px] overflow-hidden min-h-[320px] flex flex-col relative cursor-pointer transition-[transform,box-shadow] duration-[350ms] ease-[cubic-bezier(.4,0,.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.10)] bg-gradient-to-br from-[#7b2d8b] to-[#560bad] text-white hover:-translate-y-2 hover:scale-[1.01] hover:shadow-[0_24px_56px_rgba(0,0,0,0.18)] max-md:min-h-[220px] max-md:rounded-[18px] max-[480px]:min-h-[200px]">
+                <div class="absolute inset-0 z-[1]">
+                    <img class="w-full h-full object-contain object-bottom px-4 pt-6 pb-0 drop-shadow-[0_-4px_24px_rgba(0,0,0,0.15)] transition-transform duration-500 ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08] group-hover:-translate-y-[6px]" src="{{ asset('img/kategori/IT_Hardware-removebg-preview.png') }}" alt="IT Hardware">
+                </div>
+                <div class="relative z-[2] mt-auto px-[22px] pb-[22px] pt-20 bg-gradient-to-t from-[rgba(0,0,0,0.55)] to-transparent">
+                    <div class="text-[10px] font-bold tracking-[0.1em] uppercase opacity-85 mb-1">Teknologi</div>
+                    <div class="text-[clamp(1.1rem,1.8vw,1.4rem)] font-extrabold tracking-[-0.02em] leading-[1.2] mb-3 max-md:text-[1rem]">IT Hardware<br>&amp; Software</div>
+                    <a href="/peralatan-kantor" class="inline-flex items-center gap-[6px] bg-[rgba(255,255,255,0.22)] backdrop-blur-[8px] border border-[rgba(255,255,255,0.35)] text-white text-[11px] font-semibold py-[6px] px-[14px] rounded-[980px] w-fit transition-colors duration-200 hover:bg-[rgba(255,255,255,0.42)]">Browse ›</a>
                 </div>
             </div>
         </div>
@@ -1492,109 +270,109 @@ ul { list-style: none; }
 
 
 <!-- testimoni -->
-<section class="testimonials-section" id="reviews">
+<section class="py-20 bg-white max-md:py-14" id="reviews">
     <div class="container">
-        <div class="testimonials-header reveal">
+        <div class="reveal flex items-start justify-between mb-10 flex-wrap gap-5 max-md:mb-8">
             <div>
-                <p class="testimonials-eyebrow">Our Reviews</p>
-                <h2 class="testimonials-title">What Our <span>Clients</span> Say</h2>
+                <p class="text-[11px] font-bold tracking-[0.12em] uppercase text-[#999] mb-[10px]">Our Reviews</p>
+                <h2 class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-[-0.04em] leading-[1.1] text-[#111] max-md:text-[clamp(1.6rem,6vw,2.2rem)]">What Our <span class="text-[#bbb] font-normal">Clients</span> Say</h2>
             </div>
-            <div class="testimonials-nav">
-                <button class="testi-nav-btn" onclick="testiScroll(-1)" aria-label="Sebelumnya">&#8592;</button>
-                <button class="testi-nav-btn" onclick="testiScroll(1)" aria-label="Berikutnya">&#8594;</button>
+            <div class="flex gap-[10px] items-center pt-2 shrink-0">
+                <button class="w-[50px] h-[50px] rounded-full bg-[#888] border-none cursor-pointer flex items-center justify-center text-white text-[20px] transition-[background,transform] duration-200 shrink-0 hover:bg-[rgba(192,57,43,0.65)] hover:scale-[1.05]" onclick="testiScroll(-1)" aria-label="Sebelumnya">&#8592;</button>
+                <button class="w-[50px] h-[50px] rounded-full bg-[#888] border-none cursor-pointer flex items-center justify-center text-white text-[20px] transition-[background,transform] duration-200 shrink-0 hover:bg-[rgba(192,57,43,0.65)] hover:scale-[1.05]" onclick="testiScroll(1)" aria-label="Berikutnya">&#8594;</button>
             </div>
         </div>
 
-        <div class="testimonials-track-wrap" id="testiWrap">
-            <div class="testimonials-track" id="testiTrack">
+        <div class="overflow-hidden cursor-grab active:cursor-grabbing select-none" id="testiWrap">
+            <div class="flex gap-6 transition-transform duration-500 ease-[cubic-bezier(.4,0,.2,1)] will-change-transform" id="testiTrack">
 
-                <div class="testi-card">
+                <div class="bg-[#f5f5f7] rounded-[20px] p-8 min-w-[calc(33.333%-16px)] w-[calc(33.333%-16px)] shrink-0 flex flex-col justify-between box-border min-h-[400px] max-lg:min-w-[calc(50%-12px)] max-lg:w-[calc(50%-12px)] max-md:min-w-full max-md:w-full max-md:p-6 max-md:min-h-0">
                     <div>
-                        <div class="testi-top">
-                            <img class="testi-avatar" src="https://i.pravatar.cc/120?img=11" alt="Budi Santoso">
-                            <div class="testi-company-badge">
-                                <span class="testi-badge-icon">KK</span>
+                        <div class="flex items-center justify-between gap-3 mb-7">
+                            <img class="w-[60px] h-[60px] rounded-full object-cover shrink-0 block" src="https://i.pravatar.cc/120?img=11" alt="Budi Santoso">
+                            <div class="flex items-center gap-2 border-[1.5px] border-[#ddd] rounded-[980px] py-[7px] pl-[10px] pr-4 text-[12px] font-bold text-[#333] bg-white whitespace-nowrap">
+                                <span class="w-6 h-6 rounded-full bg-[#111] text-white text-[11px] font-extrabold flex items-center justify-center shrink-0 uppercase">KK</span>
                                 Kemenkeu
                             </div>
                         </div>
-                        <span class="testi-quote-mark">&#10077;</span>
-                        <p class="testi-text">Mereka menyesuaikan solusinya dengan kebutuhan dan tujuan spesifik instansi kami dengan sangat baik.</p>
+                        <span class="text-[44px] text-[#4361ee] leading-[1] font-[Georgia,serif] mb-4 block">&#10077;</span>
+                        <p class="text-[clamp(16px,1.6vw,20px)] font-bold leading-[1.5] text-[#111] mb-8 max-md:text-[15px]">Mereka menyesuaikan solusinya dengan kebutuhan dan tujuan spesifik instansi kami dengan sangat baik.</p>
                     </div>
-                    <div class="testi-footer">
-                        <div class="testi-name">Budi Santoso</div>
-                        <div class="testi-role">Kepala IT, Kementerian Keuangan<br>Jakarta, Indonesia</div>
+                    <div class="border-l-[3px] border-[#cdcdcd] pl-[14px] mt-auto">
+                        <div class="text-[14px] font-bold text-[#111]">Budi Santoso</div>
+                        <div class="text-[12px] text-[#999] mt-[3px] leading-[1.4]">Kepala IT, Kementerian Keuangan<br>Jakarta, Indonesia</div>
                     </div>
                 </div>
 
-                <div class="testi-card">
+                <div class="bg-[#f5f5f7] rounded-[20px] p-8 min-w-[calc(33.333%-16px)] w-[calc(33.333%-16px)] shrink-0 flex flex-col justify-between box-border min-h-[400px] max-lg:min-w-[calc(50%-12px)] max-lg:w-[calc(50%-12px)] max-md:min-w-full max-md:w-full max-md:p-6 max-md:min-h-0">
                     <div>
-                        <div class="testi-top">
-                            <img class="testi-avatar" src="https://i.pravatar.cc/120?img=32" alt="Dian Rahayu">
-                            <div class="testi-company-badge">
-                                <span class="testi-badge-icon">WK</span>
+                        <div class="flex items-center justify-between gap-3 mb-7">
+                            <img class="w-[60px] h-[60px] rounded-full object-cover shrink-0 block" src="https://i.pravatar.cc/120?img=32" alt="Dian Rahayu">
+                            <div class="flex items-center gap-2 border-[1.5px] border-[#ddd] rounded-[980px] py-[7px] pl-[10px] pr-4 text-[12px] font-bold text-[#333] bg-white whitespace-nowrap">
+                                <span class="w-6 h-6 rounded-full bg-[#111] text-white text-[11px] font-extrabold flex items-center justify-center shrink-0 uppercase">WK</span>
                                 Wijaya Karya
                             </div>
                         </div>
-                        <span class="testi-quote-mark">&#10077;</span>
-                        <p class="testi-text">Mereka mengorganisir pekerjaan dan manajemen internal proyek kami dengan sangat outstanding.</p>
+                        <span class="text-[44px] text-[#4361ee] leading-[1] font-[Georgia,serif] mb-4 block">&#10077;</span>
+                        <p class="text-[clamp(16px,1.6vw,20px)] font-bold leading-[1.5] text-[#111] mb-8 max-md:text-[15px]">Mereka mengorganisir pekerjaan dan manajemen internal proyek kami dengan sangat outstanding.</p>
                     </div>
-                    <div class="testi-footer">
-                        <div class="testi-name">Dian Rahayu</div>
-                        <div class="testi-role">Project Manager, PT Wijaya Karya<br>Surabaya, Jawa Timur</div>
+                    <div class="border-l-[3px] border-[#cdcdcd] pl-[14px] mt-auto">
+                        <div class="text-[14px] font-bold text-[#111]">Dian Rahayu</div>
+                        <div class="text-[12px] text-[#999] mt-[3px] leading-[1.4]">Project Manager, PT Wijaya Karya<br>Surabaya, Jawa Timur</div>
                     </div>
                 </div>
 
-                <div class="testi-card">
+                <div class="bg-[#f5f5f7] rounded-[20px] p-8 min-w-[calc(33.333%-16px)] w-[calc(33.333%-16px)] shrink-0 flex flex-col justify-between box-border min-h-[400px] max-lg:min-w-[calc(50%-12px)] max-lg:w-[calc(50%-12px)] max-md:min-w-full max-md:w-full max-md:p-6 max-md:min-h-0">
                     <div>
-                        <div class="testi-top">
-                            <img class="testi-avatar" src="https://i.pravatar.cc/120?img=53" alt="Ahmad Fauzy">
-                            <div class="testi-company-badge">
-                                <span class="testi-badge-icon">IH</span>
+                        <div class="flex items-center justify-between gap-3 mb-7">
+                            <img class="w-[60px] h-[60px] rounded-full object-cover shrink-0 block" src="https://i.pravatar.cc/120?img=53" alt="Ahmad Fauzy">
+                            <div class="flex items-center gap-2 border-[1.5px] border-[#ddd] rounded-[980px] py-[7px] pl-[10px] pr-4 text-[12px] font-bold text-[#333] bg-white whitespace-nowrap">
+                                <span class="w-6 h-6 rounded-full bg-[#111] text-white text-[11px] font-extrabold flex items-center justify-center shrink-0 uppercase">IH</span>
                                 InHive Space
                             </div>
                         </div>
-                        <span class="testi-quote-mark">&#10077;</span>
-                        <p class="testi-text">Bekerja sama dengan mereka adalah pengalaman yang luar biasa dan sangat memuaskan.</p>
+                        <span class="text-[44px] text-[#4361ee] leading-[1] font-[Georgia,serif] mb-4 block">&#10077;</span>
+                        <p class="text-[clamp(16px,1.6vw,20px)] font-bold leading-[1.5] text-[#111] mb-8 max-md:text-[15px]">Bekerja sama dengan mereka adalah pengalaman yang luar biasa dan sangat memuaskan.</p>
                     </div>
-                    <div class="testi-footer">
-                        <div class="testi-name">Ahmad Fauzy</div>
-                        <div class="testi-role">Lead Engineering, InHive Space<br>Bandung, Jawa Barat</div>
+                    <div class="border-l-[3px] border-[#cdcdcd] pl-[14px] mt-auto">
+                        <div class="text-[14px] font-bold text-[#111]">Ahmad Fauzy</div>
+                        <div class="text-[12px] text-[#999] mt-[3px] leading-[1.4]">Lead Engineering, InHive Space<br>Bandung, Jawa Barat</div>
                     </div>
                 </div>
 
-                <div class="testi-card">
+                <div class="bg-[#f5f5f7] rounded-[20px] p-8 min-w-[calc(33.333%-16px)] w-[calc(33.333%-16px)] shrink-0 flex flex-col justify-between box-border min-h-[400px] max-lg:min-w-[calc(50%-12px)] max-lg:w-[calc(50%-12px)] max-md:min-w-full max-md:w-full max-md:p-6 max-md:min-h-0">
                     <div>
-                        <div class="testi-top">
-                            <img class="testi-avatar" src="https://i.pravatar.cc/120?img=25" alt="Siti Nurhaliza">
-                            <div class="testi-company-badge">
-                                <span class="testi-badge-icon">BM</span>
+                        <div class="flex items-center justify-between gap-3 mb-7">
+                            <img class="w-[60px] h-[60px] rounded-full object-cover shrink-0 block" src="https://i.pravatar.cc/120?img=25" alt="Siti Nurhaliza">
+                            <div class="flex items-center gap-2 border-[1.5px] border-[#ddd] rounded-[980px] py-[7px] pl-[10px] pr-4 text-[12px] font-bold text-[#333] bg-white whitespace-nowrap">
+                                <span class="w-6 h-6 rounded-full bg-[#111] text-white text-[11px] font-extrabold flex items-center justify-center shrink-0 uppercase">BM</span>
                                 Bank Mandiri
                             </div>
                         </div>
-                        <span class="testi-quote-mark">&#10077;</span>
-                        <p class="testi-text">Produk berkualitas tinggi dengan layanan purna jual yang sangat responsif dan profesional.</p>
+                        <span class="text-[44px] text-[#4361ee] leading-[1] font-[Georgia,serif] mb-4 block">&#10077;</span>
+                        <p class="text-[clamp(16px,1.6vw,20px)] font-bold leading-[1.5] text-[#111] mb-8 max-md:text-[15px]">Produk berkualitas tinggi dengan layanan purna jual yang sangat responsif dan profesional.</p>
                     </div>
-                    <div class="testi-footer">
-                        <div class="testi-name">Siti Nurhaliza</div>
-                        <div class="testi-role">CTO, Bank Mandiri<br>Jakarta, Indonesia</div>
+                    <div class="border-l-[3px] border-[#cdcdcd] pl-[14px] mt-auto">
+                        <div class="text-[14px] font-bold text-[#111]">Siti Nurhaliza</div>
+                        <div class="text-[12px] text-[#999] mt-[3px] leading-[1.4]">CTO, Bank Mandiri<br>Jakarta, Indonesia</div>
                     </div>
                 </div>
 
-                <div class="testi-card">
+                <div class="bg-[#f5f5f7] rounded-[20px] p-8 min-w-[calc(33.333%-16px)] w-[calc(33.333%-16px)] shrink-0 flex flex-col justify-between box-border min-h-[400px] max-lg:min-w-[calc(50%-12px)] max-lg:w-[calc(50%-12px)] max-md:min-w-full max-md:w-full max-md:p-6 max-md:min-h-0">
                     <div>
-                        <div class="testi-top">
-                            <img class="testi-avatar" src="https://i.pravatar.cc/120?img=44" alt="Rahmat Hidayat">
-                            <div class="testi-company-badge">
-                                <span class="testi-badge-icon">PS</span>
+                        <div class="flex items-center justify-between gap-3 mb-7">
+                            <img class="w-[60px] h-[60px] rounded-full object-cover shrink-0 block" src="https://i.pravatar.cc/120?img=44" alt="Rahmat Hidayat">
+                            <div class="flex items-center gap-2 border-[1.5px] border-[#ddd] rounded-[980px] py-[7px] pl-[10px] pr-4 text-[12px] font-bold text-[#333] bg-white whitespace-nowrap">
+                                <span class="w-6 h-6 rounded-full bg-[#111] text-white text-[11px] font-extrabold flex items-center justify-center shrink-0 uppercase">PS</span>
                                 Pemprov Sumut
                             </div>
                         </div>
-                        <span class="testi-quote-mark">&#10077;</span>
-                        <p class="testi-text">Tim MitraOKE sangat membantu dalam proses pengadaan dan instalasi perangkat rapat hybrid kami.</p>
+                        <span class="text-[44px] text-[#4361ee] leading-[1] font-[Georgia,serif] mb-4 block">&#10077;</span>
+                        <p class="text-[clamp(16px,1.6vw,20px)] font-bold leading-[1.5] text-[#111] mb-8 max-md:text-[15px]">Tim MitraOKE sangat membantu dalam proses pengadaan dan instalasi perangkat rapat hybrid kami.</p>
                     </div>
-                    <div class="testi-footer">
-                        <div class="testi-name">Rahmat Hidayat</div>
-                        <div class="testi-role">Direktur IT, Pemprov Sumut<br>Medan, Sumatera Utara</div>
+                    <div class="border-l-[3px] border-[#cdcdcd] pl-[14px] mt-auto">
+                        <div class="text-[14px] font-bold text-[#111]">Rahmat Hidayat</div>
+                        <div class="text-[12px] text-[#999] mt-[3px] leading-[1.4]">Direktur IT, Pemprov Sumut<br>Medan, Sumatera Utara</div>
                     </div>
                 </div>
 
@@ -1602,7 +380,7 @@ ul { list-style: none; }
         </div>
 
         {{-- titik navigasi: 5 kartu - 3 tampil = posisi 0,1,2 --}}
-        <div class="testi-dots" id="testiDots">
+        <div class="flex justify-center gap-2 mt-7" id="testiDots">
             <button class="testi-dot active" onclick="testiGoto(0)"></button>
             <button class="testi-dot" onclick="testiGoto(1)"></button>
             <button class="testi-dot" onclick="testiGoto(2)"></button>
@@ -1611,95 +389,95 @@ ul { list-style: none; }
 </section>
 
 <!-- blog -->
-<section class="blog-section" id="blog">
+<section class="py-24 bg-[#f8f8f8] max-md:py-14" id="blog">
     <div class="container">
-        <div class="blog-header reveal">
-            <div class="blog-header-left">
-                <p class="blog-eyebrow">Insight &amp; Tips</p>
-                <h2>Artikel Terbaru</h2>
+        <div class="reveal flex items-end justify-between gap-6 mb-12 flex-wrap max-md:flex-col max-md:items-start max-md:gap-4 max-md:mb-8">
+            <div>
+                <p class="text-[11px] font-bold tracking-[0.12em] uppercase text-[#999] mb-[10px]">Insight &amp; Tips</p>
+                <h2 class="text-[clamp(1.8rem,3.2vw,2.4rem)] font-extrabold tracking-[-0.04em] text-[#111] leading-[1.15]">Artikel Terbaru</h2>
             </div>
-            <a href="https://mitraoke.com/" target="_blank" class="btn-blog-all">
+            <a href="https://mitraoke.com/" target="_blank" class="inline-flex items-center gap-2 bg-[#888] text-white text-[13px] font-bold py-3 px-[22px] rounded-[980px] whitespace-nowrap shrink-0 self-end tracking-[0.01em] transition-[background,transform] duration-200 hover:bg-[rgba(192,57,43,0.65)] hover:-translate-y-[2px] [&:hover_svg]:translate-x-[3px]">
                 Lihat Semua
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
         </div>
 
-        <div class="blog-grid">
+        <div class="grid grid-cols-[1.1fr_0.9fr] gap-7 items-stretch max-[900px]:grid-cols-1">
 
             {{-- artikel utama --}}
-            <a href="https://mitraoke.com/" target="_blank" class="blog-featured reveal">
-                <div class="blog-featured-img">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&q=80" alt="Solusi Rapat Hybrid">
-                    <span class="blog-cat-pill">Teknologi</span>
+            <a href="https://mitraoke.com/" target="_blank" class="group reveal flex flex-col bg-white rounded-[20px] overflow-hidden transition-[box-shadow,transform] duration-300 text-inherit hover:shadow-[0_16px_56px_rgba(0,0,0,0.10)] hover:-translate-y-1">
+                <div class="w-full aspect-[16/10] overflow-hidden relative shrink-0">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&q=80" alt="Solusi Rapat Hybrid" class="w-full h-full object-cover block transition-transform duration-500 ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.04]">
+                    <span class="absolute top-[14px] left-[14px] bg-[#111] text-white text-[10px] font-bold tracking-[0.08em] uppercase py-[5px] px-3 rounded-[980px] pointer-events-none">Teknologi</span>
                 </div>
-                <div class="blog-featured-body">
-                    <h3 class="blog-featured-title">Memilih Kamera Konferensi yang Tepat untuk Rapat Hybrid di Instansi Pemerintah</h3>
-                    <p class="blog-featured-excerpt">Panduan lengkap memilih kamera UHD 4K untuk rapat hybrid — mulai resolusi, sudut pandang, hingga kompatibilitas dengan platform video conference populer.</p>
-                    <div class="blog-featured-meta">
-                        <div class="blog-meta-author">
-                            <img class="blog-author-avatar" src="https://i.pravatar.cc/60?img=7" alt="Admin MitraOKE">
-                            <span class="blog-author-name">Admin MitraOKE</span>
+                <div class="p-7 pb-6 flex flex-col flex-1">
+                    <h3 class="text-[clamp(17px,1.8vw,21px)] font-extrabold tracking-[-0.03em] text-[#111] leading-[1.35] mb-[10px]">Memilih Kamera Konferensi yang Tepat untuk Rapat Hybrid di Instansi Pemerintah</h3>
+                    <p class="text-[13px] text-[#888] leading-[1.7] mb-6 line-clamp-2 flex-1">Panduan lengkap memilih kamera UHD 4K untuk rapat hybrid — mulai resolusi, sudut pandang, hingga kompatibilitas dengan platform video conference populer.</p>
+                    <div class="flex items-center justify-between gap-[10px] pt-4 border-t border-[#f0f0f0]">
+                        <div class="flex items-center gap-2">
+                            <img class="w-[30px] h-[30px] rounded-full object-cover shrink-0" src="https://i.pravatar.cc/60?img=7" alt="Admin MitraOKE">
+                            <span class="text-[12px] font-semibold text-[#555]">Admin MitraOKE</span>
                         </div>
-                        <span class="blog-date">20 Feb 2026</span>
+                        <span class="text-[11px] text-[#bbb] font-medium">20 Feb 2026</span>
                     </div>
                 </div>
             </a>
 
             {{-- daftar artikel --}}
-            <div class="blog-list reveal reveal-d2">
+            <div class="reveal reveal-d2 flex flex-col gap-3 h-full">
 
-                <a href="https://mitraoke.com/" target="_blank" class="blog-list-item">
-                    <div class="blog-list-thumb">
-                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80" alt="E-Katalog">
+                <a href="https://mitraoke.com/" target="_blank" class="group flex flex-1 gap-4 items-center p-4 bg-white rounded-[14px] cursor-pointer transition-[box-shadow,transform] duration-[250ms] text-inherit hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] hover:-translate-y-[2px] max-[480px]:flex-col max-[480px]:items-start">
+                    <div class="w-[100px] h-[72px] rounded-[10px] overflow-hidden shrink-0 max-md:w-[80px] max-md:h-[60px] max-[480px]:w-full max-[480px]:h-[160px] max-[480px]:rounded-[10px]">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80" alt="E-Katalog" class="w-full h-full object-cover block transition-transform duration-[400ms] ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08]">
                     </div>
-                    <div class="blog-list-body">
-                        <span class="blog-list-cat">Pengadaan</span>
-                        <p class="blog-list-title">Cara Pengadaan Peralatan Kantor Lewat E-Katalog LKPP dengan Mudah</p>
-                        <span class="blog-list-author">Rina Wati &middot; 15 Feb 2026</span>
+                    <div class="flex-1 flex flex-col gap-2">
+                        <span class="text-[10px] font-bold tracking-[0.08em] uppercase text-[#e63946]">Pengadaan</span>
+                        <p class="text-[13px] font-bold text-[#111] leading-[1.45] tracking-[-0.01em] line-clamp-2">Cara Pengadaan Peralatan Kantor Lewat E-Katalog LKPP dengan Mudah</p>
+                        <span class="text-[11px] text-[#bbb] font-medium">Rina Wati &middot; 15 Feb 2026</span>
                     </div>
                 </a>
 
-                <a href="https://mitraoke.com/" target="_blank" class="blog-list-item">
-                    <div class="blog-list-thumb">
-                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=80" alt="ATEN Control System">
+                <a href="https://mitraoke.com/" target="_blank" class="group flex flex-1 gap-4 items-center p-4 bg-white rounded-[14px] cursor-pointer transition-[box-shadow,transform] duration-[250ms] text-inherit hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] hover:-translate-y-[2px] max-[480px]:flex-col max-[480px]:items-start">
+                    <div class="w-[100px] h-[72px] rounded-[10px] overflow-hidden shrink-0 max-md:w-[80px] max-md:h-[60px] max-[480px]:w-full max-[480px]:h-[160px] max-[480px]:rounded-[10px]">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=80" alt="ATEN Control System" class="w-full h-full object-cover block transition-transform duration-[400ms] ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08]">
                     </div>
-                    <div class="blog-list-body">
-                        <span class="blog-list-cat">Tutorial</span>
-                        <p class="blog-list-title">Mengenal ATEN Control System: Solusi Kendali Ruang Rapat Modern</p>
-                        <span class="blog-list-author">Budi Prasetyo &middot; 10 Feb 2026</span>
-                    </div>
-                </a>
-
-                <a href="https://mitraoke.com/" target="_blank" class="blog-list-item">
-                    <div class="blog-list-thumb">
-                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&q=80" alt="ATK Kantor">
-                    </div>
-                    <div class="blog-list-body">
-                        <span class="blog-list-cat">Tips</span>
-                        <p class="blog-list-title">5 Alat Tulis Kantor Wajib yang Harus Ada di Setiap Meja Kerja</p>
-                        <span class="blog-list-author">Sari Dewi &middot; 5 Feb 2026</span>
+                    <div class="flex-1 flex flex-col gap-2">
+                        <span class="text-[10px] font-bold tracking-[0.08em] uppercase text-[#e63946]">Tutorial</span>
+                        <p class="text-[13px] font-bold text-[#111] leading-[1.45] tracking-[-0.01em] line-clamp-2">Mengenal ATEN Control System: Solusi Kendali Ruang Rapat Modern</p>
+                        <span class="text-[11px] text-[#bbb] font-medium">Budi Prasetyo &middot; 10 Feb 2026</span>
                     </div>
                 </a>
 
-                <a href="https://mitraoke.com/" target="_blank" class="blog-list-item">
-                    <div class="blog-list-thumb">
-                        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&q=80" alt="Kursi Ergonomis">
+                <a href="https://mitraoke.com/" target="_blank" class="group flex flex-1 gap-4 items-center p-4 bg-white rounded-[14px] cursor-pointer transition-[box-shadow,transform] duration-[250ms] text-inherit hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] hover:-translate-y-[2px] max-[480px]:flex-col max-[480px]:items-start">
+                    <div class="w-[100px] h-[72px] rounded-[10px] overflow-hidden shrink-0 max-md:w-[80px] max-md:h-[60px] max-[480px]:w-full max-[480px]:h-[160px] max-[480px]:rounded-[10px]">
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&q=80" alt="ATK Kantor" class="w-full h-full object-cover block transition-transform duration-[400ms] ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08]">
                     </div>
-                    <div class="blog-list-body">
-                        <span class="blog-list-cat">Furnitur</span>
-                        <p class="blog-list-title">Kursi Ergonomis vs Kursi Biasa: Mana yang Lebih Nyaman untuk Kerja?</p>
-                        <span class="blog-list-author">Imam Sutrisno &middot; 1 Feb 2026</span>
+                    <div class="flex-1 flex flex-col gap-2">
+                        <span class="text-[10px] font-bold tracking-[0.08em] uppercase text-[#e63946]">Tips</span>
+                        <p class="text-[13px] font-bold text-[#111] leading-[1.45] tracking-[-0.01em] line-clamp-2">5 Alat Tulis Kantor Wajib yang Harus Ada di Setiap Meja Kerja</p>
+                        <span class="text-[11px] text-[#bbb] font-medium">Sari Dewi &middot; 5 Feb 2026</span>
                     </div>
                 </a>
 
-                <a href="https://mitraoke.com/" target="_blank" class="blog-list-item">
-                    <div class="blog-list-thumb">
-                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&q=80" alt="Proyektor Kantor">
+                <a href="https://mitraoke.com/" target="_blank" class="group flex flex-1 gap-4 items-center p-4 bg-white rounded-[14px] cursor-pointer transition-[box-shadow,transform] duration-[250ms] text-inherit hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] hover:-translate-y-[2px] max-[480px]:flex-col max-[480px]:items-start">
+                    <div class="w-[100px] h-[72px] rounded-[10px] overflow-hidden shrink-0 max-md:w-[80px] max-md:h-[60px] max-[480px]:w-full max-[480px]:h-[160px] max-[480px]:rounded-[10px]">
+                        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&q=80" alt="Kursi Ergonomis" class="w-full h-full object-cover block transition-transform duration-[400ms] ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08]">
                     </div>
-                    <div class="blog-list-body">
-                        <span class="blog-list-cat">Teknologi</span>
-                        <p class="blog-list-title">Tips Memilih Proyektor untuk Ruang Rapat Agar Presentasi Makin Profesional</p>
-                        <span class="blog-list-author">Dewi Lestari &middot; 28 Jan 2026</span>
+                    <div class="flex-1 flex flex-col gap-2">
+                        <span class="text-[10px] font-bold tracking-[0.08em] uppercase text-[#e63946]">Furnitur</span>
+                        <p class="text-[13px] font-bold text-[#111] leading-[1.45] tracking-[-0.01em] line-clamp-2">Kursi Ergonomis vs Kursi Biasa: Mana yang Lebih Nyaman untuk Kerja?</p>
+                        <span class="text-[11px] text-[#bbb] font-medium">Imam Sutrisno &middot; 1 Feb 2026</span>
+                    </div>
+                </a>
+
+                <a href="https://mitraoke.com/" target="_blank" class="group flex flex-1 gap-4 items-center p-4 bg-white rounded-[14px] cursor-pointer transition-[box-shadow,transform] duration-[250ms] text-inherit hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] hover:-translate-y-[2px] max-[480px]:flex-col max-[480px]:items-start">
+                    <div class="w-[100px] h-[72px] rounded-[10px] overflow-hidden shrink-0 max-md:w-[80px] max-md:h-[60px] max-[480px]:w-full max-[480px]:h-[160px] max-[480px]:rounded-[10px]">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&q=80" alt="Proyektor Kantor" class="w-full h-full object-cover block transition-transform duration-[400ms] ease-[cubic-bezier(.4,0,.2,1)] group-hover:scale-[1.08]">
+                    </div>
+                    <div class="flex-1 flex flex-col gap-2">
+                        <span class="text-[10px] font-bold tracking-[0.08em] uppercase text-[#e63946]">Teknologi</span>
+                        <p class="text-[13px] font-bold text-[#111] leading-[1.45] tracking-[-0.01em] line-clamp-2">Tips Memilih Proyektor untuk Ruang Rapat Agar Presentasi Makin Profesional</p>
+                        <span class="text-[11px] text-[#bbb] font-medium">Dewi Lestari &middot; 28 Jan 2026</span>
                     </div>
                 </a>
 
@@ -1709,84 +487,84 @@ ul { list-style: none; }
 </section>
 
 <!-- newsletter -->
-<section class="newsletter-section" id="contact">
+<section class="py-20 bg-white border-b border-[#ebebeb] max-md:py-12" id="contact">
     <div class="container">
-        <div class="newsletter-card reveal">
-            <div class="newsletter-text">
-                <span class="newsletter-eyebrow">&#9679; Info Produk TKDN</span>
-                <h3>Ingin tahu barang<br><em>TKDN</em> kami?</h3>
-                <p>Subscribe dan dapatkan update produk terbaru, harga spesial, serta katalog eksklusif langsung di email Anda.</p>
+        <div class="newsletter-card reveal flex items-center justify-between gap-12 flex-wrap relative bg-[#111] rounded-[28px] py-14 px-[52px] overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.14)] max-md:py-9 max-md:px-6 max-md:rounded-[20px] max-md:flex-col max-md:gap-7">
+            <div class="flex-1 min-w-[280px]">
+                <span class="inline-block text-[11px] font-bold tracking-[0.12em] uppercase text-[#e63946] mb-[14px]">&#9679; Info Produk TKDN</span>
+                <h3 class="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black text-white tracking-[-0.04em] leading-[1.1] mb-3 max-md:text-[clamp(1.5rem,6vw,2rem)]">Ingin tahu barang<br><em class="not-italic text-[#e63946]">TKDN</em> kami?</h3>
+                <p class="text-[14px] text-[rgba(255,255,255,0.45)] leading-[1.65] max-w-[420px]">Subscribe dan dapatkan update produk terbaru, harga spesial, serta katalog eksklusif langsung di email Anda.</p>
             </div>
-            <form class="newsletter-form" onsubmit="return false;">
+            <form class="flex flex-col gap-3 shrink-0 w-[340px] max-[768px]:w-full" onsubmit="return false;">
                 <input
                     type="email"
-                    class="newsletter-input"
+                    class="py-[15px] px-5 rounded-[14px] border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.06)] text-white text-[14px] font-[inherit] outline-none transition-[border-color,background] duration-200 placeholder:text-[rgba(255,255,255,0.3)] focus:border-[#e63946] focus:bg-[rgba(255,255,255,0.09)]"
                     placeholder="Masukkan email Anda..."
                 >
-                <button class="btn-subscribe" type="submit">
+                <button class="py-[15px] px-7 rounded-[14px] bg-[#e63946] text-white text-[14px] font-bold border-none cursor-pointer font-[inherit] flex items-center justify-center gap-2 transition-[background,transform] duration-200 tracking-[-0.01em] hover:bg-[rgba(193,18,31,0.65)] hover:-translate-y-[2px]" type="submit">
                     Subscribe Sekarang
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
-                <span class="newsletter-note">Tidak ada spam. Bisa unsubscribe kapan saja.</span>
+                <span class="text-[11px] text-[rgba(255,255,255,0.25)] text-center">Tidak ada spam. Bisa unsubscribe kapan saja.</span>
             </form>
         </div>
     </div>
 </section>
 
 <!-- footer -->
-<footer class="footer" id="about">
+<footer class="bg-[#1a1a1a] text-[rgba(255,255,255,0.65)] pt-16 pb-8 border-t-[3px] border-[#e63946] max-md:pt-12 max-md:pb-6" id="about">
     <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <div class="footer-logo-wrap">
-                    <img src="{{ asset('img/logo/mitraoke-removebg-preview.png') }}" alt="MitraOke">
+        <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-10 mb-14 max-md:grid-cols-2 max-md:gap-7 max-md:mb-9 max-[480px]:grid-cols-1 max-[480px]:gap-6">
+            <div>
+                <div class="inline-flex items-center mb-5">
+                    <img src="{{ asset('img/logo/mitraoke-removebg-preview.png') }}" alt="MitraOke" class="h-[40px] w-auto block object-contain [filter:invert(1)_hue-rotate(180deg)]">
                 </div>
-                <p>Distributor resmi peralatan kantor premium bersertifikasi TKDN. Melayani instansi pemerintah dan korporasi di seluruh Indonesia.</p>
-                <div class="footer-social">
-                    <a href="https://mitraoke.com/" class="social-btn" target="_blank">📷</a>
-                    <a href="https://mitraoke.com/" class="social-btn" target="_blank">▶️</a>
-                    <a href="https://wa.me/6281252141397" class="social-btn" target="_blank">💬</a>
+                <p class="text-[13px] leading-[1.65] max-w-[300px] mb-6">Distributor resmi peralatan kantor premium bersertifikasi TKDN. Melayani instansi pemerintah dan korporasi di seluruh Indonesia.</p>
+                <div class="flex gap-[10px]">
+                    <a href="https://mitraoke.com/" class="w-[38px] h-[38px] rounded-[10px] bg-[rgba(255,255,255,0.07)] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-[16px] text-[rgba(255,255,255,0.7)] cursor-pointer transition-[background,color] duration-200 hover:bg-[rgba(230,57,70,0.65)] hover:text-white hover:border-transparent" target="_blank">📷</a>
+                    <a href="https://mitraoke.com/" class="w-[38px] h-[38px] rounded-[10px] bg-[rgba(255,255,255,0.07)] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-[16px] text-[rgba(255,255,255,0.7)] cursor-pointer transition-[background,color] duration-200 hover:bg-[rgba(230,57,70,0.65)] hover:text-white hover:border-transparent" target="_blank">▶️</a>
+                    <a href="https://wa.me/6281252141397" class="w-[38px] h-[38px] rounded-[10px] bg-[rgba(255,255,255,0.07)] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-[16px] text-[rgba(255,255,255,0.7)] cursor-pointer transition-[background,color] duration-200 hover:bg-[rgba(230,57,70,0.65)] hover:text-white hover:border-transparent" target="_blank">💬</a>
                 </div>
             </div>
 
-            <div class="footer-col">
-                <h5>Produk</h5>
+            <div>
+                <h5 class="text-[13px] font-bold text-white mb-[18px] tracking-[0.01em]">Produk</h5>
                 <ul>
-                    <li><a href="/peralatan-kantor">ATEN Control System</a></li>
-                    <li><a href="/peralatan-kantor">AREC Media Station</a></li>
-                    <li><a href="/peralatan-kantor">IPEVO Camera</a></li>
-                    <li><a href="/peralatan-kantor">Wharfedale Audio</a></li>
-                    <li><a href="/peralatan-kantor">ATK Perkantoran</a></li>
+                    <li class="mb-[10px]"><a href="/peralatan-kantor" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">ATEN Control System</a></li>
+                    <li class="mb-[10px]"><a href="/peralatan-kantor" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">AREC Media Station</a></li>
+                    <li class="mb-[10px]"><a href="/peralatan-kantor" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">IPEVO Camera</a></li>
+                    <li class="mb-[10px]"><a href="/peralatan-kantor" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">Wharfedale Audio</a></li>
+                    <li class="mb-[10px]"><a href="/peralatan-kantor" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">ATK Perkantoran</a></li>
                 </ul>
             </div>
 
-            <div class="footer-col">
-                <h5>Layanan</h5>
+            <div>
+                <h5 class="text-[13px] font-bold text-white mb-[18px] tracking-[0.01em]">Layanan</h5>
                 <ul>
-                    <li><a href="https://mitraoke.com/index.html" target="_blank">E-Katalog Resmi</a></li>
-                    <li><a href="https://www.mbizmarket.co.id/p/mitracom" target="_blank">Mbizmarket</a></li>
-                    <li><a href="https://mitraoke.com/contact.html" target="_blank">Konsultasi Gratis</a></li>
-                    <li><a href="https://mitraoke.com/" target="_blank">Pengadaan Pemerintah</a></li>
+                    <li class="mb-[10px]"><a href="https://mitraoke.com/index.html" target="_blank" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">E-Katalog Resmi</a></li>
+                    <li class="mb-[10px]"><a href="https://www.mbizmarket.co.id/p/mitracom" target="_blank" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">Mbizmarket</a></li>
+                    <li class="mb-[10px]"><a href="https://mitraoke.com/contact.html" target="_blank" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">Konsultasi Gratis</a></li>
+                    <li class="mb-[10px]"><a href="https://mitraoke.com/" target="_blank" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">Pengadaan Pemerintah</a></li>
                 </ul>
             </div>
 
-            <div class="footer-col">
-                <h5>Hubungi</h5>
+            <div>
+                <h5 class="text-[13px] font-bold text-white mb-[18px] tracking-[0.01em]">Hubungi</h5>
                 <ul>
-                    <li><a href="https://mitraoke.com/" target="_blank">mitraoke.com</a></li>
-                    <li><a href="https://wa.me/6281252141397" target="_blank">+62 812-5214-1397</a></li>
-                    <li><a href="https://mitraoke.com/contact.html" target="_blank">Form Kontak</a></li>
-                    <li><a href="https://mitraoke.com/services.html" target="_blank">Instagram</a></li>
+                    <li class="mb-[10px]"><a href="https://mitraoke.com/" target="_blank" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">mitraoke.com</a></li>
+                    <li class="mb-[10px]"><a href="https://wa.me/6281252141397" target="_blank" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">+62 812-5214-1397</a></li>
+                    <li class="mb-[10px]"><a href="https://mitraoke.com/contact.html" target="_blank" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">Form Kontak</a></li>
+                    <li class="mb-[10px]"><a href="https://mitraoke.com/services.html" target="_blank" class="text-[13px] text-[rgba(255,255,255,0.55)] transition-colors duration-150 hover:text-white">Instagram</a></li>
                 </ul>
             </div>
         </div>
 
-        <div class="footer-bottom">
-            <p>© {{ date('Y') }} MitraOke. Seluruh hak cipta dilindungi undang-undang.</p>
-            <div class="footer-bottom-links">
-                <a href="#">Kebijakan Privasi</a>
-                <a href="#">Ketentuan Layanan</a>
-                <a href="https://mitraoke.com/contact.html" target="_blank">Legal</a>
+        <div class="pt-7 border-t border-[rgba(255,255,255,0.08)] flex items-center justify-between flex-wrap gap-3 max-md:flex-col max-md:items-start max-md:gap-[10px]">
+            <p class="text-[12px]">© {{ date('Y') }} MitraOke. Seluruh hak cipta dilindungi undang-undang.</p>
+            <div class="flex gap-5 flex-wrap max-md:gap-3">
+                <a href="#" class="text-[12px] text-[rgba(255,255,255,0.4)] transition-colors duration-150 hover:text-white">Kebijakan Privasi</a>
+                <a href="#" class="text-[12px] text-[rgba(255,255,255,0.4)] transition-colors duration-150 hover:text-white">Ketentuan Layanan</a>
+                <a href="https://mitraoke.com/contact.html" target="_blank" class="text-[12px] text-[rgba(255,255,255,0.4)] transition-colors duration-150 hover:text-white">Legal</a>
             </div>
         </div>
     </div>
@@ -1912,6 +690,25 @@ navHamburger.addEventListener('click', () => {
     }
 })();
 
+// ===== Popover Kota =====
+function toggleCity(e, btn) {
+    e.stopPropagation();
+    const item = btn.closest('.city-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.city-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+}
+function closeCity(e) {
+    e.stopPropagation();
+    e.target.closest('.city-item').classList.remove('open');
+}
+document.addEventListener('click', function() {
+    document.querySelectorAll('.city-item.open').forEach(i => i.classList.remove('open'));
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.querySelectorAll('.city-item.open').forEach(i => i.classList.remove('open'));
+});
+
 // link aktif navbar saat scroll
 (function() {
     const sections = document.querySelectorAll('section[id], div[id]');
@@ -1932,4 +729,3 @@ navHamburger.addEventListener('click', () => {
 
 </body>
 </html>
-
